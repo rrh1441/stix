@@ -46,6 +46,7 @@ The content is organized as follows:
 requirements.txt
 stix_mapper.py
 stix_poc.py
+vercel.json
 </directory_structure>
 
 <files>
@@ -356,6 +357,24 @@ def handler(path):
     return jsonify({"message": "Minimal Python API OK", "key_present": api_key_present}), 200
 
 # No app.run() needed for Vercel
+</file>
+
+<file path="vercel.json">
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "stix_poc.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/stix_poc.py"
+      }
+    ]
+  }
 </file>
 
 </files>

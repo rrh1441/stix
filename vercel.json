@@ -9,7 +9,8 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/stix_poc.py"
+        "dest": "stix_poc.py"
       }
     ]
   }
+  
