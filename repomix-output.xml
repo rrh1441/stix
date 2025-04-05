@@ -43,14 +43,40 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
+app.py
 requirements.txt
 stix_mapper.py
-stix_poc.py
 vercel.json
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
+
+<file path="app.py">
+# app.py
+import os
+from flask import Flask, jsonify
+from datetime import datetime, timezone
+
+app = Flask(__name__)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def handler(path):
+    print(f"[{datetime.now(timezone.utc).isoformat()}] Minimal Python handler invoked for path: /{path}")
+
+    # Optional: Check if env var reading works at a basic level
+    key_var = 'THREAT_API_KEY'
+    api_key_present = key_var in os.environ
+    print(f"{key_var} is present in environment: {api_key_present}")
+
+    return jsonify({
+        "message": "Minimal Python API OK",
+        "key_present": api_key_present
+    }), 200
+
+# No handler() function — just expose 'app'
+</file>
 
 <file path="requirements.txt">
 Flask>=2.0
@@ -334,44 +360,19 @@ def map_flashpoint_vuln_to_stix(fp_vuln_data):
     return stix_objects
 </file>
 
-<file path="stix_poc.py">
-# api/stix_poc.py (TEMPORARY MINIMAL TEST)
-import os
-from flask import Flask, jsonify
-from datetime import datetime, timezone
-
-app = Flask(__name__)
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def handler(path):
-    # This print statement is crucial - check Vercel logs for it
-    print(f"[{datetime.now(timezone.utc).isoformat()}] Minimal Python handler invoked for path: /{path}")
-
-    # Optional: Check if env var reading works at a basic level
-    key_var = 'THREAT_API_KEY' # The key we expect
-    api_key_present = key_var in os.environ
-    print(f"{key_var} is present in environment: {api_key_present}")
-
-    # Return a simple success message
-    return jsonify({"message": "Minimal Python API OK", "key_present": api_key_present}), 200
-
-# No app.run() needed for Vercel
-</file>
-
 <file path="vercel.json">
 {
     "version": 2,
     "builds": [
       {
-        "src": "stix_poc.py",
+        "src": "app.py",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/stix_poc.py"
+        "dest": "app.py"
       }
     ]
   }
