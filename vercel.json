@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "stix_poc.py",
+        "src": "app.py",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "stix_poc.py"
+        "dest": "app.py"
       }
     ]
   }
