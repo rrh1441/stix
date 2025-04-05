@@ -10,7 +10,6 @@ app = Flask(__name__)
 def handler_route(path):
     print(f"[{datetime.now(timezone.utc).isoformat()}] Minimal Python handler invoked for path: /{path}")
 
-    # Optional: Check if env var reading works
     key_var = 'THREAT_API_KEY'
     api_key_present = key_var in os.environ
     print(f"{key_var} is present in environment: {api_key_present}")
@@ -20,5 +19,7 @@ def handler_route(path):
         "key_present": api_key_present
     }), 200
 
-# Vercel expects a 'handler' object to expose
-handler = app
+# This exposes a WSGI-compatible handler for Vercel
+from vercel_wsgi import handle_request
+def handler(event, context):
+    return handle_request(app, event, context)
