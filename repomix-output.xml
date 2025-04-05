@@ -43,48 +43,95 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
-app.py
-requirements.txt
-stix_mapper.py
+api/
+  requirements.txt
+  stix_mapper.py
+  stix_poc.py
+public/
+  file.svg
+  globe.svg
+  next.svg
+  text.txt
+  vercel.svg
+  window.svg
+src/
+  app/
+    api/
+      bulk/
+        bulk search route.ts
+        route.ts
+      credentials/
+        credentials route.ts
+        route.ts
+      markets/
+        markets route.ts
+        route.ts
+      monthly/
+        monthly route.ts
+        route.ts
+      telegram/
+        route.ts
+        telegram only route.ts
+      threats/
+        route.ts
+        single keyword route.ts
+      yearly/
+        annual result route.ts
+        route.ts
+      requirements.txt
+    bulk-upload/
+      page.tsx
+    vuln-stix/
+      page.tsx
+    globals.css
+    layout.tsx
+    page.tsx
+    stix_mapper.py
+  components/
+    ui/
+      alert.tsx
+      button.tsx
+      card.tsx
+      command.tsx
+      dialog.tsx
+      input.tsx
+      popover.tsx
+      tabs.tsx
+    CsvUpload.tsx
+    CsvUploadMarkets.tsx
+    CsvUploadTelegram.tsx
+    QueryForm.tsx
+    ThreatChart.tsx
+  lib/
+    utils.ts
+stix-backend/
+  .gitignore
+  app.py
+  requirements.txt
+  stix_mapper.py
+.eslintrc.json
+.gitignore
+components.json
+json2csv.d.ts
+next.config.js
+package.json
+postcss.config.mjs
+README.md
+tailwind.config.ts
+tsconfig.json
 vercel.json
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
 
-<file path="app.py">
-# app.py
-import os
-from flask import Flask, jsonify
-from datetime import datetime, timezone
-
-app = Flask(__name__)
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def handler(path):
-    print(f"[{datetime.now(timezone.utc).isoformat()}] Minimal Python handler invoked for path: /{path}")
-
-    # Optional: Check if env var reading works at a basic level
-    key_var = 'THREAT_API_KEY'
-    api_key_present = key_var in os.environ
-    print(f"{key_var} is present in environment: {api_key_present}")
-
-    return jsonify({
-        "message": "Minimal Python API OK",
-        "key_present": api_key_present
-    }), 200
-
-# No handler() function — just expose 'app'
-</file>
-
-<file path="requirements.txt">
+<file path="api/requirements.txt">
 Flask>=2.0
 requests>=2.25
 stix2==3.0.1
 </file>
 
-<file path="stix_mapper.py">
+<file path="api/stix_mapper.py">
 # stix_mapper.py (Corrected and Complete: Fixes syntax, imports, markings, adds simplified Software/Relationship)
 
 import json
@@ -360,19 +407,4576 @@ def map_flashpoint_vuln_to_stix(fp_vuln_data):
     return stix_objects
 </file>
 
+<file path="api/stix_poc.py">
+# api/stix_poc.py (TEMPORARY MINIMAL TEST)
+import os
+from flask import Flask, jsonify
+from datetime import datetime, timezone
+
+app = Flask(__name__)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def handler(path):
+    # This print statement is crucial - check Vercel logs for it
+    print(f"[{datetime.now(timezone.utc).isoformat()}] Minimal Python handler invoked for path: /{path}")
+
+    # Optional: Check if env var reading works at a basic level
+    key_var = 'THREAT_API_KEY' # The key we expect
+    api_key_present = key_var in os.environ
+    print(f"{key_var} is present in environment: {api_key_present}")
+
+    # Return a simple success message
+    return jsonify({"message": "Minimal Python API OK", "key_present": api_key_present}), 200
+
+# No app.run() needed for Vercel
+</file>
+
+<file path="public/file.svg">
+<svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z" clip-rule="evenodd" fill="#666" fill-rule="evenodd"/></svg>
+</file>
+
+<file path="public/globe.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g clip-path="url(#a)"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.27 14.1a6.5 6.5 0 0 0 3.67-3.45q-1.24.21-2.7.34-.31 1.83-.97 3.1M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.48-1.52a7 7 0 0 1-.96 0H7.5a4 4 0 0 1-.84-1.32q-.38-.89-.63-2.08a40 40 0 0 0 3.92 0q-.25 1.2-.63 2.08a4 4 0 0 1-.84 1.31zm2.94-4.76q1.66-.15 2.95-.43a7 7 0 0 0 0-2.58q-1.3-.27-2.95-.43a18 18 0 0 1 0 3.44m-1.27-3.54a17 17 0 0 1 0 3.64 39 39 0 0 1-4.3 0 17 17 0 0 1 0-3.64 39 39 0 0 1 4.3 0m1.1-1.17q1.45.13 2.69.34a6.5 6.5 0 0 0-3.67-3.44q.65 1.26.98 3.1M8.48 1.5l.01.02q.41.37.84 1.31.38.89.63 2.08a40 40 0 0 0-3.92 0q.25-1.2.63-2.08a4 4 0 0 1 .85-1.32 7 7 0 0 1 .96 0m-2.75.4a6.5 6.5 0 0 0-3.67 3.44 29 29 0 0 1 2.7-.34q.31-1.83.97-3.1M4.58 6.28q-1.66.16-2.95.43a7 7 0 0 0 0 2.58q1.3.27 2.95.43a18 18 0 0 1 0-3.44m.17 4.71q-1.45-.12-2.69-.34a6.5 6.5 0 0 0 3.67 3.44q-.65-1.27-.98-3.1" fill="#666"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h16v16H0z"/></clipPath></defs></svg>
+</file>
+
+<file path="public/next.svg">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80"><path fill="#000" d="M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0ZM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7-9-11-27.1 33.7h17.8l18.3-22.7z"/><path fill="#000" d="M81 79.3 17 0H0v79.3h13.6V17l50.2 62.3H81Zm252.6-.4c-1 0-1.8-.4-2.5-1s-1.1-1.6-1.1-2.6.3-1.8 1-2.5 1.6-1 2.6-1 1.8.3 2.5 1a3.4 3.4 0 0 1 .6 4.3 3.7 3.7 0 0 1-3 1.8zm23.2-33.5h6v23.3c0 2.1-.4 4-1.3 5.5a9.1 9.1 0 0 1-3.8 3.5c-1.6.8-3.5 1.3-5.7 1.3-2 0-3.7-.4-5.3-1s-2.8-1.8-3.7-3.2c-.9-1.3-1.4-3-1.4-5h6c.1.8.3 1.6.7 2.2s1 1.2 1.6 1.5c.7.4 1.5.5 2.4.5 1 0 1.8-.2 2.4-.6a4 4 0 0 0 1.6-1.8c.3-.8.5-1.8.5-3V45.5zm30.9 9.1a4.4 4.4 0 0 0-2-3.3 7.5 7.5 0 0 0-4.3-1.1c-1.3 0-2.4.2-3.3.5-.9.4-1.6 1-2 1.6a3.5 3.5 0 0 0-.3 4c.3.5.7.9 1.3 1.2l1.8 1 2 .5 3.2.8c1.3.3 2.5.7 3.7 1.2a13 13 0 0 1 3.2 1.8 8.1 8.1 0 0 1 3 6.5c0 2-.5 3.7-1.5 5.1a10 10 0 0 1-4.4 3.5c-1.8.8-4.1 1.2-6.8 1.2-2.6 0-4.9-.4-6.8-1.2-2-.8-3.4-2-4.5-3.5a10 10 0 0 1-1.7-5.6h6a5 5 0 0 0 3.5 4.6c1 .4 2.2.6 3.4.6 1.3 0 2.5-.2 3.5-.6 1-.4 1.8-1 2.4-1.7a4 4 0 0 0 .8-2.4c0-.9-.2-1.6-.7-2.2a11 11 0 0 0-2.1-1.4l-3.2-1-3.8-1c-2.8-.7-5-1.7-6.6-3.2a7.2 7.2 0 0 1-2.4-5.7 8 8 0 0 1 1.7-5 10 10 0 0 1 4.3-3.5c2-.8 4-1.2 6.4-1.2 2.3 0 4.4.4 6.2 1.2 1.8.8 3.2 2 4.3 3.4 1 1.4 1.5 3 1.5 5h-5.8z"/></svg>
+</file>
+
+<file path="public/text.txt">
+hello world
+</file>
+
+<file path="public/vercel.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1155 1000"><path d="m577.3 0 577.4 1000H0z" fill="#fff"/></svg>
+</file>
+
+<file path="public/window.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 2.5h13v10a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1zM0 1h16v11.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 0 12.5zm3.75 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M7 4.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m1.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#666"/></svg>
+</file>
+
+<file path="src/app/api/bulk/bulk search route.ts">
+import { NextResponse } from "next/server";
+import { parse as parseCSV } from "papaparse";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+// Force this route to run in the Node.js runtime.
+export const runtime = "nodejs";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for your external threat API
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls your external threat API for a given keyword and day.
+ * Returns the count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the bulk API endpoint.
+ */
+export async function POST(request: Request) {
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    const csvText = await file.text();
+
+    const { data: rows }: { data: string[][] } = parseCSV(csvText, {
+      header: false,
+      skipEmptyLines: true,
+    });
+
+    const keywords: string[] = rows.map((row: string[]) => row[0]).filter(Boolean);
+    if (keywords.length === 0) {
+      return NextResponse.json({ error: "CSV is empty or invalid" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    const results: Array<Record<string, number | string>> = [];
+
+    // For each keyword in the CSV file
+    for (const keyword of keywords) {
+      const rowData: Record<string, number | string> = { keyword };
+      // For each day, fetch the threat count and delay 250ms after each query
+      // Use the actual day string as the key so that it matches the header
+      for (const day of days) {
+        try {
+          const count = await fetchDailyTotal(keyword, day);
+          rowData[day] = count;
+        } catch (error) {
+          console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+          rowData[day] = 0;
+        }
+        // 250ms delay to avoid rate limiting (adjust if necessary)
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+      results.push(rowData);
+    }
+
+    // Build header fields using the actual dates
+    const fields = ["keyword", ...days];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const outputCsv = json2csvParser.parse(results);
+
+    return new Response(outputCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="daily_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Bulk API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/bulk/route.ts">
+import { NextResponse } from "next/server";
+import { parse as parseCSV } from "papaparse";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+// Force this route to run in the Node.js runtime.
+export const runtime = "nodejs";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for your external threat API
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls your external threat API for a given keyword and day.
+ * Returns the count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the bulk API endpoint.
+ */
+export async function POST(request: Request) {
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    const csvText = await file.text();
+
+    const { data: rows }: { data: string[][] } = parseCSV(csvText, {
+      header: false,
+      skipEmptyLines: true,
+    });
+
+    const keywords: string[] = rows.map((row: string[]) => row[0]).filter(Boolean);
+    if (keywords.length === 0) {
+      return NextResponse.json({ error: "CSV is empty or invalid" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    const results: Array<Record<string, number | string>> = [];
+
+    // For each keyword in the CSV file
+    for (const keyword of keywords) {
+      const rowData: Record<string, number | string> = { keyword };
+      // For each day, fetch the threat count and delay 250ms after each query
+      // Use the actual day string as the key so that it matches the header
+      for (const day of days) {
+        try {
+          const count = await fetchDailyTotal(keyword, day);
+          rowData[day] = count;
+        } catch (error) {
+          console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+          rowData[day] = 0;
+        }
+        // 250ms delay to avoid rate limiting (adjust if necessary)
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+      results.push(rowData);
+    }
+
+    // Build header fields using the actual dates
+    const fields = ["keyword", ...days];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const outputCsv = json2csvParser.parse(results);
+
+    return new Response(outputCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="daily_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Bulk API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/credentials/credentials route.ts">
+import { NextResponse } from "next/server";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for the Credentials API query.
+ *
+ * This payload uses:
+ * - page: 0, size: 0 so that no individual hits are returned,
+ * - highlight enabled,
+ * - include_total set to true to get only the total count,
+ * - a base query for credential sightings plus any additional keyword terms.
+ * - a date range for the day.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true, // Ensure only totals are returned
+    // Base query for credential sightings plus additional keyword terms
+    query: `+basetypes:(credential-sighting) ${keyword}`,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls the Credentials API for a given keyword and day.
+ * Returns the total count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+  
+  const apiResponse = await fetch(process.env.CREDENTIALS_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      // Use CREDENTIALS_API_KEY if provided; otherwise fallback to THREAT_API_KEY.
+      Authorization: `Bearer ${process.env.CREDENTIALS_API_KEY || process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  // Based on your documentation, the API returns an object with a "hits" key that includes "total".
+  if (data.hits && typeof data.hits.total === "number") {
+    return data.hits.total;
+  }
+  // Fallback in case the total is in a different structure
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the Credentials bulk search endpoint.
+ *
+ * Expects a JSON POST with a { keyword } body.
+ * Iterates over the last 7 days and returns an array of objects,
+ * each with a day and its corresponding total count.
+ * A delay is applied between each API call to avoid rate limiting.
+ */
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    let partial = false;
+    const dailyResults: Array<{ day: string; total: { value: number; relation: string } }> = [];
+
+    // Loop over each day and fetch the total count
+    for (const day of days) {
+      try {
+        const count = await fetchDailyTotal(keyword, day);
+        dailyResults.push({
+          day,
+          total: {
+            value: count,
+            relation: "=",
+          },
+        });
+      } catch {
+        partial = true;
+        break;
+      }
+      // Delay between calls to avoid rate limiting (adjust the delay as needed)
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+
+    return NextResponse.json({ partial, data: dailyResults }, { status: 200 });
+  } catch {
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/credentials/route.ts">
+import { NextResponse } from "next/server";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for the Credentials API query.
+ *
+ * This payload uses:
+ * - page: 0, size: 0 so that no individual hits are returned,
+ * - highlight enabled,
+ * - include_total set to true to get only the total count,
+ * - a base query for credential sightings plus any additional keyword terms.
+ * - a date range for the day.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true, // Ensure only totals are returned
+    // Base query for credential sightings plus additional keyword terms
+    query: `+basetypes:(credential-sighting) ${keyword}`,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls the Credentials API for a given keyword and day.
+ * Returns the total count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+  
+  const apiResponse = await fetch(process.env.CREDENTIALS_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      // Use CREDENTIALS_API_KEY if provided; otherwise fallback to THREAT_API_KEY.
+      Authorization: `Bearer ${process.env.CREDENTIALS_API_KEY || process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  // Based on your documentation, the API returns an object with a "hits" key that includes "total".
+  if (data.hits && typeof data.hits.total === "number") {
+    return data.hits.total;
+  }
+  // Fallback in case the total is in a different structure
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the Credentials bulk search endpoint.
+ *
+ * Expects a JSON POST with a { keyword } body.
+ * Iterates over the last 7 days and returns an array of objects,
+ * each with a day and its corresponding total count.
+ * A delay is applied between each API call to avoid rate limiting.
+ */
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    let partial = false;
+    const dailyResults: Array<{ day: string; total: { value: number; relation: string } }> = [];
+
+    // Loop over each day and fetch the total count
+    for (const day of days) {
+      try {
+        const count = await fetchDailyTotal(keyword, day);
+        dailyResults.push({
+          day,
+          total: {
+            value: count,
+            relation: "=",
+          },
+        });
+      } catch {
+        partial = true;
+        break;
+      }
+      // Delay between calls to avoid rate limiting (adjust the delay as needed)
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+
+    return NextResponse.json({ partial, data: dailyResults }, { status: 200 });
+  } catch {
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/markets/markets route.ts">
+// src/app/api/markets/route.ts
+
+import { NextResponse } from "next/server";
+import { parse as parseCSV } from "papaparse";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+// Force this route to run in the Node.js runtime.
+export const runtime = "nodejs";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1); // Exclude today
+
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for the Markets API query.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls the Markets API for a given keyword and day.
+ * Returns the count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+  
+  const apiResponse = await fetch(process.env.MARKETS_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      // Use MARKETS_API_KEY if defined; otherwise fall back to THREAT_API_KEY.
+      Authorization: `Bearer ${process.env.MARKETS_API_KEY || process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the bulk Markets API endpoint.
+ *
+ * Expects a multipart/form-data POST with a file field named "file".
+ * The CSV file should contain one keyword per row (first column).
+ * Returns a CSV file as an attachment with daily counts for each keyword,
+ * and replaces the header row to show actual dates.
+ */
+export async function POST(request: Request) {
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    const csvText = await file.text();
+
+    const { data: rows }: { data: string[][] } = parseCSV(csvText, {
+      header: false,
+      skipEmptyLines: true,
+    });
+
+    const keywords: string[] = rows.map((row: string[]) => row[0]).filter(Boolean);
+    if (keywords.length === 0) {
+      return NextResponse.json({ error: "CSV is empty or invalid" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    const results: Array<Record<string, number | string>> = [];
+
+    // For each keyword in the CSV file
+    for (const keyword of keywords) {
+      const rowData: Record<string, number | string> = { keyword };
+      // For each day, fetch the count using the internal key "day1", "day2", etc.
+      for (let i = 0; i < days.length; i++) {
+        const day = days[i];
+        try {
+          const count = await fetchDailyTotal(keyword, day);
+          rowData[`day${i + 1}`] = count;
+        } catch (error) {
+          console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+          rowData[`day${i + 1}`] = 0;
+        }
+        // Delay between calls (adjust delay value as needed)
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+      results.push(rowData);
+    }
+
+    // Build header fields using the internal keys
+    const fields = ["keyword", ...days.map((_, i) => `day${i + 1}`)];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const outputCsv = json2csvParser.parse(results);
+
+    // --- Post-process the CSV header ---
+    // Replace "day1", "day2", etc. in the header row with the actual date strings.
+    const csvLines = outputCsv.split("\n");
+    if (csvLines.length > 0) {
+      const headerColumns = csvLines[0].split(",");
+      for (let i = 0; i < days.length; i++) {
+        headerColumns[i + 1] = days[i];
+      }
+      csvLines[0] = headerColumns.join(",");
+    }
+    const finalCsv = csvLines.join("\n");
+    // -------------------------------------
+
+    return new Response(finalCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="daily_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Bulk Markets API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/markets/route.ts">
+// src/app/api/markets/route.ts
+
+import { NextResponse } from "next/server";
+import { parse as parseCSV } from "papaparse";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+// Force this route to run in the Node.js runtime.
+export const runtime = "nodejs";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1); // Exclude today
+
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for the Markets API query.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls the Markets API for a given keyword and day.
+ * Returns the count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+  
+  const apiResponse = await fetch(process.env.MARKETS_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      // Use MARKETS_API_KEY if defined; otherwise fall back to THREAT_API_KEY.
+      Authorization: `Bearer ${process.env.MARKETS_API_KEY || process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the bulk Markets API endpoint.
+ *
+ * Expects a multipart/form-data POST with a file field named "file".
+ * The CSV file should contain one keyword per row (first column).
+ * Returns a CSV file as an attachment with daily counts for each keyword,
+ * and replaces the header row to show actual dates.
+ */
+export async function POST(request: Request) {
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    const csvText = await file.text();
+
+    const { data: rows }: { data: string[][] } = parseCSV(csvText, {
+      header: false,
+      skipEmptyLines: true,
+    });
+
+    const keywords: string[] = rows.map((row: string[]) => row[0]).filter(Boolean);
+    if (keywords.length === 0) {
+      return NextResponse.json({ error: "CSV is empty or invalid" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    const results: Array<Record<string, number | string>> = [];
+
+    // For each keyword in the CSV file
+    for (const keyword of keywords) {
+      const rowData: Record<string, number | string> = { keyword };
+      // For each day, fetch the count using the internal key "day1", "day2", etc.
+      for (let i = 0; i < days.length; i++) {
+        const day = days[i];
+        try {
+          const count = await fetchDailyTotal(keyword, day);
+          rowData[`day${i + 1}`] = count;
+        } catch (error) {
+          console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+          rowData[`day${i + 1}`] = 0;
+        }
+        // Delay between calls (adjust delay value as needed)
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+      results.push(rowData);
+    }
+
+    // Build header fields using the internal keys
+    const fields = ["keyword", ...days.map((_, i) => `day${i + 1}`)];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const outputCsv = json2csvParser.parse(results);
+
+    // --- Post-process the CSV header ---
+    // Replace "day1", "day2", etc. in the header row with the actual date strings.
+    const csvLines = outputCsv.split("\n");
+    if (csvLines.length > 0) {
+      const headerColumns = csvLines[0].split(",");
+      for (let i = 0; i < days.length; i++) {
+        headerColumns[i + 1] = days[i];
+      }
+      csvLines[0] = headerColumns.join(",");
+    }
+    const finalCsv = csvLines.join("\n");
+    // -------------------------------------
+
+    return new Response(finalCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="daily_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Bulk Markets API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/monthly/monthly route.ts">
+import { NextResponse } from "next/server";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+/**
+ * Returns an array of 12 objects representing the last 12 full months (excluding the current month).
+ * Each object contains:
+ *  - start: ISO string for the first day of the month at 00:00:00Z
+ *  - end: ISO string for the last day of the month at 23:59:59Z
+ *  - label: A label in the form "YYYY-MM"
+ */
+function getLast12MonthsExcludingCurrent(): { start: string; end: string; label: string }[] {
+  const months: { start: string; end: string; label: string }[] = [];
+  const now = new Date();
+  // Set current date to the first day of this month, at 00:00:00
+  now.setDate(1);
+  now.setHours(0, 0, 0, 0);
+  // Exclude the current month by starting with the previous month.
+  for (let i = 1; i <= 12; i++) {
+    const temp = new Date(now);
+    temp.setMonth(temp.getMonth() - i);
+    // Start of the month:
+    const startDate = new Date(temp.getFullYear(), temp.getMonth(), 1);
+    // End of the month:
+    const endDate = new Date(temp.getFullYear(), temp.getMonth() + 1, 0);
+    // Format as ISO date string (YYYY-MM-DD) with fixed times:
+    const start = startDate.toISOString().split("T")[0] + "T00:00:00Z";
+    const end = endDate.toISOString().split("T")[0] + "T23:59:59Z";
+    // Label as "YYYY-MM"
+    const label = startDate.toISOString().split("T")[0].slice(0, 7);
+    months.push({ start, end, label });
+  }
+  return months.reverse();
+}
+
+/**
+ * Constructs the payload for the API query.
+ * This is the same as your daily payload but accepts arbitrary start/end dates.
+ */
+function buildMonthlyPayload(keyword: string, start: string, end: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start,
+        end,
+      },
+    },
+  };
+}
+
+/**
+ * Calls your API for a given keyword and month (with start and end dates).
+ * Returns the total count as a number.
+ */
+async function fetchMonthlyTotal(keyword: string, start: string, end: string): Promise<number> {
+  const payload = buildMonthlyPayload(keyword, start, end);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Month ${start} to ${end} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the monthly search endpoint.
+ *
+ * Expects a JSON POST with a { keyword } body.
+ * Iterates over the last 12 months, calls the API for each month,
+ * and builds a CSV where the header row uses the actual month labels.
+ * A 250ms delay is applied between API calls.
+ */
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const months = getLast12MonthsExcludingCurrent();
+    // Build a single row with the keyword and monthly counts (using internal keys)
+    const resultRow: Record<string, number | string> = { keyword };
+
+    for (let i = 0; i < months.length; i++) {
+      const { start, end, label } = months[i];
+      try {
+        const count = await fetchMonthlyTotal(keyword, start, end);
+        resultRow[`month${i + 1}`] = count;
+      } catch (error) {
+        console.error(`Error processing keyword "${keyword}" for month ${label}:`, error);
+        resultRow[`month${i + 1}`] = 0;
+      }
+      // 250ms delay to avoid rate limiting (adjust as needed)
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+
+    // Build CSV fields using the internal keys.
+    const fields = ["keyword", ...months.map((_, i) => `month${i + 1}`)];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const rawCsv = json2csvParser.parse([resultRow]);
+
+    // Post-process the CSV header: replace internal keys ("month1", "month2", etc.)
+    // with the actual month labels from the months array.
+    const csvLines = rawCsv.split("\n");
+    if (csvLines.length > 0) {
+      const headerColumns = csvLines[0].split(",");
+      for (let i = 0; i < months.length; i++) {
+        headerColumns[i + 1] = months[i].label;
+      }
+      csvLines[0] = headerColumns.join(",");
+    }
+    const finalCsv = csvLines.join("\n");
+
+    return new NextResponse(finalCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="yearly_monthly_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Monthly API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/monthly/route.ts">
+import { NextResponse } from "next/server";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+/**
+ * Returns an array of 12 objects representing the last 12 full months (excluding the current month).
+ * Each object contains:
+ *  - start: ISO string for the first day of the month at 00:00:00Z
+ *  - end: ISO string for the last day of the month at 23:59:59Z
+ *  - label: A label in the form "YYYY-MM"
+ */
+function getLast12MonthsExcludingCurrent(): { start: string; end: string; label: string }[] {
+  const months: { start: string; end: string; label: string }[] = [];
+  const now = new Date();
+  // Set current date to the first day of this month, at 00:00:00
+  now.setDate(1);
+  now.setHours(0, 0, 0, 0);
+  // Exclude the current month by starting with the previous month.
+  for (let i = 1; i <= 12; i++) {
+    const temp = new Date(now);
+    temp.setMonth(temp.getMonth() - i);
+    // Start of the month:
+    const startDate = new Date(temp.getFullYear(), temp.getMonth(), 1);
+    // End of the month:
+    const endDate = new Date(temp.getFullYear(), temp.getMonth() + 1, 0);
+    // Format as ISO date string (YYYY-MM-DD) with fixed times:
+    const start = startDate.toISOString().split("T")[0] + "T00:00:00Z";
+    const end = endDate.toISOString().split("T")[0] + "T23:59:59Z";
+    // Label as "YYYY-MM"
+    const label = startDate.toISOString().split("T")[0].slice(0, 7);
+    months.push({ start, end, label });
+  }
+  return months.reverse();
+}
+
+/**
+ * Constructs the payload for the API query.
+ * This is the same as your daily payload but accepts arbitrary start/end dates.
+ */
+function buildMonthlyPayload(keyword: string, start: string, end: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start,
+        end,
+      },
+    },
+  };
+}
+
+/**
+ * Calls your API for a given keyword and month (with start and end dates).
+ * Returns the total count as a number.
+ */
+async function fetchMonthlyTotal(keyword: string, start: string, end: string): Promise<number> {
+  const payload = buildMonthlyPayload(keyword, start, end);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Month ${start} to ${end} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the monthly search endpoint.
+ *
+ * Expects a JSON POST with a { keyword } body.
+ * Iterates over the last 12 months, calls the API for each month,
+ * and builds a CSV where the header row uses the actual month labels.
+ * A 250ms delay is applied between API calls.
+ */
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const months = getLast12MonthsExcludingCurrent();
+    // Build a single row with the keyword and monthly counts (using internal keys)
+    const resultRow: Record<string, number | string> = { keyword };
+
+    for (let i = 0; i < months.length; i++) {
+      const { start, end, label } = months[i];
+      try {
+        const count = await fetchMonthlyTotal(keyword, start, end);
+        resultRow[`month${i + 1}`] = count;
+      } catch (error) {
+        console.error(`Error processing keyword "${keyword}" for month ${label}:`, error);
+        resultRow[`month${i + 1}`] = 0;
+      }
+      // 250ms delay to avoid rate limiting (adjust as needed)
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+
+    // Build CSV fields using the internal keys.
+    const fields = ["keyword", ...months.map((_, i) => `month${i + 1}`)];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const rawCsv = json2csvParser.parse([resultRow]);
+
+    // Post-process the CSV header: replace internal keys ("month1", "month2", etc.)
+    // with the actual month labels from the months array.
+    const csvLines = rawCsv.split("\n");
+    if (csvLines.length > 0) {
+      const headerColumns = csvLines[0].split(",");
+      for (let i = 0; i < months.length; i++) {
+        headerColumns[i + 1] = months[i].label;
+      }
+      csvLines[0] = headerColumns.join(",");
+    }
+    const finalCsv = csvLines.join("\n");
+
+    return new NextResponse(finalCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="yearly_monthly_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Monthly API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/telegram/route.ts">
+import { NextResponse } from "next/server";
+import { parse as parseCSV } from "papaparse";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+// Force this route to run in the Node.js runtime.
+export const runtime = "nodejs";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for the Telegram-specific API query.
+ * This is identical to your existing bulk search payload except that it
+ * adds a filter to only include posts from Telegram.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+      site: ["telegram"], // Narrow the search to Telegram posts
+    },
+  };
+}
+
+/**
+ * Calls your API for a given keyword and day.
+ * Returns the total count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the Bulk Search – Telegram endpoint.
+ *
+ * Expects a multipart/form-data POST with a file field named "file".
+ * The CSV file should contain one keyword per row (first column).
+ * For each keyword, it iterates over the last 7 days, calling the API
+ * with a 250ms delay between calls. It builds a CSV using internal keys,
+ * then post-processes the header row so that the final CSV shows the actual date strings.
+ */
+export async function POST(request: Request) {
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+    const csvText = await file.text();
+    const { data: rows }: { data: string[][] } = parseCSV(csvText, {
+      header: false,
+      skipEmptyLines: true,
+    });
+    const keywords: string[] = rows.map((row: string[]) => row[0]).filter(Boolean);
+    if (keywords.length === 0) {
+      return NextResponse.json({ error: "CSV is empty or invalid" }, { status: 400 });
+    }
+    const days = getLast7DaysExcludingToday();
+    const results: Array<Record<string, number | string>> = [];
+    // For each keyword in the CSV file
+    for (const keyword of keywords) {
+      const rowData: Record<string, number | string> = { keyword };
+      // For each day, fetch the Telegram-specific count and delay 250ms between calls
+      for (const day of days) {
+        try {
+          const count = await fetchDailyTotal(keyword, day);
+          // Use the actual day string as the key so that later we can replace headers
+          rowData[day] = count;
+        } catch (error) {
+          console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+          rowData[day] = 0;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+      results.push(rowData);
+    }
+    // Build header fields using the actual date strings.
+    const fields = ["keyword", ...days];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const outputCsv = json2csvParser.parse(results);
+    return new Response(outputCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="telegram_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Bulk Telegram API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/telegram/telegram only route.ts">
+import { NextResponse } from "next/server";
+import { parse as parseCSV } from "papaparse";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+// Force this route to run in the Node.js runtime.
+export const runtime = "nodejs";
+
+/**
+ * Returns an array of the last 7 full days (excluding today)
+ */
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+/**
+ * Constructs the payload for the Telegram-specific API query.
+ * This is identical to your existing bulk search payload except that it
+ * adds a filter to only include posts from Telegram.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+      site: ["telegram"], // Narrow the search to Telegram posts
+    },
+  };
+}
+
+/**
+ * Calls your API for a given keyword and day.
+ * Returns the total count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the Bulk Search – Telegram endpoint.
+ *
+ * Expects a multipart/form-data POST with a file field named "file".
+ * The CSV file should contain one keyword per row (first column).
+ * For each keyword, it iterates over the last 7 days, calling the API
+ * with a 250ms delay between calls. It builds a CSV using internal keys,
+ * then post-processes the header row so that the final CSV shows the actual date strings.
+ */
+export async function POST(request: Request) {
+  try {
+    const formData = await request.formData();
+    const file = formData.get("file") as File;
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+    const csvText = await file.text();
+    const { data: rows }: { data: string[][] } = parseCSV(csvText, {
+      header: false,
+      skipEmptyLines: true,
+    });
+    const keywords: string[] = rows.map((row: string[]) => row[0]).filter(Boolean);
+    if (keywords.length === 0) {
+      return NextResponse.json({ error: "CSV is empty or invalid" }, { status: 400 });
+    }
+    const days = getLast7DaysExcludingToday();
+    const results: Array<Record<string, number | string>> = [];
+    // For each keyword in the CSV file
+    for (const keyword of keywords) {
+      const rowData: Record<string, number | string> = { keyword };
+      // For each day, fetch the Telegram-specific count and delay 250ms between calls
+      for (const day of days) {
+        try {
+          const count = await fetchDailyTotal(keyword, day);
+          // Use the actual day string as the key so that later we can replace headers
+          rowData[day] = count;
+        } catch (error) {
+          console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+          rowData[day] = 0;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+      results.push(rowData);
+    }
+    // Build header fields using the actual date strings.
+    const fields = ["keyword", ...days];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const outputCsv = json2csvParser.parse(results);
+    return new Response(outputCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="telegram_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Bulk Telegram API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/threats/route.ts">
+import { NextResponse } from "next/server";
+
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    let partial = false;
+    const dailyResults: Array<{
+      day: string;
+      total: { value: number; relation: string };
+    }> = [];
+
+    for (const day of days) {
+      try {
+        const count = await fetchDailyTotal(keyword, day);
+        dailyResults.push({
+          day,
+          total: {
+            value: count,
+            relation: "=",
+          },
+        });
+      } catch {
+        partial = true;
+        break;
+      }
+
+      // quarter-second delay to avoid rate limiting
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+
+    return NextResponse.json({ partial, data: dailyResults }, { status: 200 });
+  } catch {
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/threats/single keyword route.ts">
+import { NextResponse } from "next/server";
+
+function getLast7DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+
+  for (let i = 6; i >= 0; i--) {
+    const temp = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(temp.toISOString().split("T")[0]);
+  }
+  return days;
+}
+
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const days = getLast7DaysExcludingToday();
+    let partial = false;
+    const dailyResults: Array<{
+      day: string;
+      total: { value: number; relation: string };
+    }> = [];
+
+    for (const day of days) {
+      try {
+        const count = await fetchDailyTotal(keyword, day);
+        dailyResults.push({
+          day,
+          total: {
+            value: count,
+            relation: "=",
+          },
+        });
+      } catch {
+        partial = true;
+        break;
+      }
+
+      // quarter-second delay to avoid rate limiting
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+
+    return NextResponse.json({ partial, data: dailyResults }, { status: 200 });
+  } catch {
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/yearly/annual result route.ts">
+import { NextResponse } from "next/server";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+/**
+ * Returns an array of the last 365 full days (excluding today)
+ */
+function getLast365DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  // Zero out time and exclude today.
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+  for (let i = 0; i < 365; i++) {
+    const day = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(day.toISOString().split("T")[0]);
+  }
+  return days.reverse();
+}
+
+/**
+ * Constructs the payload for your API query.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls your API for a given keyword and day.
+ * Returns the total count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the Yearly Search endpoint.
+ *
+ * Expects a JSON POST with a { keyword } body.
+ * Iterates over the last 365 days, calls the API for each day,
+ * and builds a CSV where the header row is replaced with the actual date strings.
+ * A delay of 250ms is applied between API calls.
+ */
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const days = getLast365DaysExcludingToday();
+    const resultRow: Record<string, number | string> = { keyword };
+
+    for (let i = 0; i < days.length; i++) {
+      const day = days[i];
+      try {
+        const count = await fetchDailyTotal(keyword, day);
+        resultRow[`day${i + 1}`] = count;
+      } catch (error) {
+        console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+        resultRow[`day${i + 1}`] = 0;
+      }
+      // 250ms delay to help avoid rate limiting (adjust as needed)
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+
+    // Build the CSV fields using internal keys.
+    const fields = ["keyword", ...days.map((_, i) => `day${i + 1}`)];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const rawCsv = json2csvParser.parse([resultRow]);
+
+    // Post-process header: replace "day1", "day2", etc. with the actual date strings.
+    const csvLines = rawCsv.split("\n");
+    if (csvLines.length > 0) {
+      const headerColumns = csvLines[0].split(",");
+      for (let i = 0; i < days.length; i++) {
+        headerColumns[i + 1] = days[i];
+      }
+      csvLines[0] = headerColumns.join(",");
+    }
+    const finalCsv = csvLines.join("\n");
+
+    return new Response(finalCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="yearly_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Yearly API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/yearly/route.ts">
+import { NextResponse } from "next/server";
+import { Parser as JSON2CSVParser } from "json2csv";
+
+/**
+ * Returns an array of the last 365 full days (excluding today)
+ */
+function getLast365DaysExcludingToday(): string[] {
+  const days: string[] = [];
+  const now = new Date();
+  // Zero out time and exclude today.
+  now.setHours(0, 0, 0, 0);
+  now.setDate(now.getDate() - 1);
+  for (let i = 0; i < 365; i++) {
+    const day = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    days.push(day.toISOString().split("T")[0]);
+  }
+  return days.reverse();
+}
+
+/**
+ * Constructs the payload for your API query.
+ */
+function buildDailyPayload(keyword: string, day: string) {
+  return {
+    page: 0,
+    size: 0,
+    highlight: { enabled: true },
+    include_total: true,
+    query: keyword,
+    include: {
+      date: {
+        start: `${day}T00:00:00Z`,
+        end: `${day}T23:59:59Z`,
+      },
+    },
+  };
+}
+
+/**
+ * Calls your API for a given keyword and day.
+ * Returns the total count as a number.
+ */
+async function fetchDailyTotal(keyword: string, day: string): Promise<number> {
+  const payload = buildDailyPayload(keyword, day);
+
+  const apiResponse = await fetch(process.env.THREAT_API_URL as string, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.THREAT_API_KEY}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!apiResponse.ok) {
+    const errorText = await apiResponse.text();
+    throw new Error(`Day ${day} for keyword "${keyword}" => ${apiResponse.status}: ${errorText}`);
+  }
+
+  const data = await apiResponse.json();
+  return data?.total?.value ?? 0;
+}
+
+/**
+ * The POST handler for the Yearly Search endpoint.
+ *
+ * Expects a JSON POST with a { keyword } body.
+ * Iterates over the last 365 days, calls the API for each day,
+ * and builds a CSV where the header row is replaced with the actual date strings.
+ * A delay of 250ms is applied between API calls.
+ */
+export async function POST(req: Request) {
+  try {
+    const { keyword } = (await req.json()) || {};
+    if (!keyword) {
+      return NextResponse.json({ error: "Missing 'keyword'" }, { status: 400 });
+    }
+
+    const days = getLast365DaysExcludingToday();
+    const resultRow: Record<string, number | string> = { keyword };
+
+    for (let i = 0; i < days.length; i++) {
+      const day = days[i];
+      try {
+        const count = await fetchDailyTotal(keyword, day);
+        resultRow[`day${i + 1}`] = count;
+      } catch (error) {
+        console.error(`Error processing keyword "${keyword}" on ${day}:`, error);
+        resultRow[`day${i + 1}`] = 0;
+      }
+      // 250ms delay to help avoid rate limiting (adjust as needed)
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+
+    // Build the CSV fields using internal keys.
+    const fields = ["keyword", ...days.map((_, i) => `day${i + 1}`)];
+    const json2csvParser = new JSON2CSVParser({ fields });
+    const rawCsv = json2csvParser.parse([resultRow]);
+
+    // Post-process header: replace "day1", "day2", etc. with the actual date strings.
+    const csvLines = rawCsv.split("\n");
+    if (csvLines.length > 0) {
+      const headerColumns = csvLines[0].split(",");
+      for (let i = 0; i < days.length; i++) {
+        headerColumns[i + 1] = days[i];
+      }
+      csvLines[0] = headerColumns.join(",");
+    }
+    const finalCsv = csvLines.join("\n");
+
+    return new Response(finalCsv, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": 'attachment; filename="yearly_counts.csv"',
+      },
+    });
+  } catch (error) {
+    console.error("Yearly API Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+</file>
+
+<file path="src/app/api/requirements.txt">
+Flask>=2.0
+requests>=2.25
+stix2==3.0.1
+</file>
+
+<file path="src/app/bulk-upload/page.tsx">
+// src/app/bulk-upload/page.tsx
+
+"use client";
+
+import React from "react";
+
+export default function BulkUploadPage() {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    // POST to /api/bulk
+    const response = await fetch("/api/bulk", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert("Error: " + (errorData.error || "Unknown error"));
+      return;
+    }
+
+    // CSV text returned
+    const csv = await response.text();
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    // Trigger a download
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "daily_counts.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  return (
+    <main className="p-4">
+      <h1 className="text-xl font-bold mb-2">
+        Bulk CSV (7 Days, Excluding Today)
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className="space-y-3"
+      >
+        <div>
+          <label className="font-semibold">CSV File of Keywords:</label>
+          <input
+            type="file"
+            name="file"
+            accept=".csv,text/csv"
+            className="ml-2"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-3 py-1 rounded"
+        >
+          Upload & Generate
+        </button>
+      </form>
+    </main>
+  );
+}
+</file>
+
+<file path="src/app/vuln-stix/page.tsx">
+// src/app/vuln-stix/page.tsx
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Loader2, AlertTriangle, CheckCircle, Download, ArrowLeft } from 'lucide-react';
+
+// *** UPDATED API Endpoint Path ***
+const STIX_POC_ENDPOINT = '/py-api/stix_poc'; // Use the new non-conflicting path
+
+interface StatusMessage {
+  text: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+}
+
+export default function VulnStixPage() {
+  const [status, setStatus] = useState<StatusMessage>({ text: 'Ready to generate.', type: 'info' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const [bundleSizeBytes, setBundleSizeBytes] = useState<number>(0);
+
+  // Cleanup blob URL
+  React.useEffect(() => {
+    // Return cleanup function
+    return () => {
+      if (downloadUrl) {
+        URL.revokeObjectURL(downloadUrl);
+      }
+    };
+  }, [downloadUrl]); // Dependency array includes downloadUrl
+
+  const handleGenerateClick = async () => {
+    setIsLoading(true);
+    setStatus({ text: 'Generating STIX bundle... This can take several minutes. Please wait.', type: 'info' });
+    // Revoke previous URL if it exists
+    if (downloadUrl) {
+        URL.revokeObjectURL(downloadUrl);
+        setDownloadUrl(null);
+        setBundleSizeBytes(0);
+    }
+
+    try {
+      // Attempt to fetch from the backend endpoint
+      const response = await fetch(STIX_POC_ENDPOINT, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+      });
+
+      const contentType = response.headers.get("content-type");
+
+      if (response.ok && contentType && contentType.includes("application/json")) {
+          // Success - response body IS the STIX bundle JSON
+          const bundleBlob = await response.blob();
+          const bundleText = await bundleBlob.text();
+          let bundleData;
+          try {
+              bundleData = JSON.parse(bundleText);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          } catch (_parseError) { // Prefixed unused variable
+               throw new Error("Failed to parse successful response JSON.");
+          }
+
+          // Check if the bundle contains more than just the marking definition
+          if (bundleData && bundleData.objects && bundleData.objects.length > 1) {
+              const url = URL.createObjectURL(bundleBlob);
+              setDownloadUrl(url);
+              setBundleSizeBytes(bundleBlob.size);
+              setStatus({ text: `Bundle generated successfully (${(bundleBlob.size / 1024).toFixed(1)} KB). Click below to download.`, type: 'success' });
+          } else {
+              // API returned 200 OK but with an empty bundle
+              setStatus({ text: 'Warning: No vulnerabilities found matching criteria or failed to map them.', type: 'warning' });
+              setDownloadUrl(null);
+              setBundleSizeBytes(0);
+          }
+
+      } else {
+          // Handle non-OK or non-JSON responses
+          let errorMsg = `Request failed with status ${response.status}`;
+          if (contentType && contentType.includes("application/json")) {
+              try {
+                  const errorResult = await response.json();
+                  errorMsg = errorResult?.errors?.[0]?.detail || errorResult.message || errorMsg;
+              } catch (jsonError) { console.error("Could not parse error JSON:", jsonError); }
+          } else {
+              try {
+                  const textError = await response.text();
+                  // Try to extract useful info from non-JSON response (like HTML 404 page)
+                  errorMsg = `${response.status}: ${textError.substring(0,150)}...`;
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              } catch (_textErr) { /* Ignore inability to read text body */ } // Prefixed unused variable
+          }
+          throw new Error(errorMsg);
+      }
+
+    } catch (error: unknown) { // Use unknown
+      console.error("Error generating/fetching bundle:", error);
+      // Type check before accessing message
+      let errorMessage = 'Generation failed or could not connect.';
+      if (error instanceof Error) {
+          errorMessage = error.message;
+      } else if (typeof error === 'string') {
+           errorMessage = error;
+      }
+      setStatus({ text: `Error: ${errorMessage}`, type: 'error' });
+      setDownloadUrl(null);
+      setBundleSizeBytes(0);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Trigger download from blob URL
+  const triggerDownload = () => {
+      if (!downloadUrl) return;
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      link.download = `stix_bundle_${timestamp}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  };
+
+  // --- JSX ---
+  return (
+    <main className="p-4 md:p-8">
+      <Card className="max-w-3xl mx-auto shadow-lg dark:bg-slate-950">
+        <CardHeader className="border-b relative">
+          {/* Back button */}
+          <Link href="/" passHref legacyBehavior>
+            <Button variant="outline" size="sm" className="absolute left-4 top-4">
+              <ArrowLeft className="mr-2 h-4 w-4"/> Back
+            </Button>
+          </Link>
+          {/* Title and Description */}
+          <div className="pt-12 text-center sm:pt-0 sm:text-left sm:pl-24">
+            <CardTitle className="text-2xl">Vulnerability to STIX Generator (POC)</CardTitle>
+            <CardDescription>
+              Generate & Download STIX Bundle
+            </CardDescription>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6 space-y-6">
+          <div>
+            <p className="text-sm text-muted-foreground mb-3">
+              Click to generate a STIX bundle for vulnerabilities published in the last 14 days with public exploits, specific solutions, and remote location.
+              <br />
+              <strong className="text-destructive">Warning:</strong> Generation is performed live and may take up to 5 minutes, potentially timing out.
+            </p>
+            <Button onClick={handleGenerateClick} disabled={isLoading} className="w-full sm:w-auto">
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isLoading ? 'Generating (takes time)...' : 'Generate STIX Bundle'}
+            </Button>
+          </div>
+
+          {/* Status Message Area */}
+          {status.text && (
+            <Alert variant={status.type === 'error' ? 'destructive' : 'default'} className={
+              status.type === 'success' ? 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300' :
+              status.type === 'warning' ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300' :
+              status.type === 'info' ? 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300' : ''
+            }>
+              {status.type === 'error' && <AlertTriangle className="h-4 w-4" />}
+              {status.type === 'success' && <CheckCircle className="h-4 w-4" />}
+              <AlertTitle className="font-semibold">{status.type.charAt(0).toUpperCase() + status.type.slice(1)}</AlertTitle>
+              <AlertDescription>{status.text}</AlertDescription>
+            </Alert>
+          )}
+
+          {/* Download Button Area */}
+          {downloadUrl && status.type === 'success' && (
+              <div>
+                <h3 className="font-semibold mb-2">Download Bundle</h3>
+                <Button onClick={triggerDownload}>
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Generated Bundle ({ (bundleSizeBytes / 1024).toFixed(1) } KB)
+                </Button>
+              </div>
+          )}
+
+        </CardContent>
+      </Card>
+    </main>
+  );
+}
+</file>
+
+<file path="src/app/globals.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+</file>
+
+<file path="src/app/layout.tsx">
+// src/app/layout.tsx
+
+import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+
+// Load the Inter font
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+// Load the JetBrains Mono font
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Create Next App",
+  description: "Generated by create next app",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}>
+        {children}
+      </body>
+    </html>
+  );
+}
+</file>
+
+<file path="src/app/page.tsx">
+// src/app/page.tsx (Corrected Link structure)
+"use client";
+
+import { useState } from "react";
+import Link from 'next/link'; // Import Link
+import QueryForm from "@/components/QueryForm";
+import ThreatChart from "@/components/ThreatChart";
+import CsvUpload from "@/components/CsvUpload";
+import CsvUploadMarkets from "@/components/CsvUploadMarkets";
+import CsvUploadTelegram from "@/components/CsvUploadTelegram";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { buttonVariants } from "@/components/ui/button"; // Import buttonVariants
+import { cn } from "@/lib/utils"; // Import cn utility
+import { InfoIcon, AlertTriangle, Loader2, BarChart3, DatabaseZap } from "lucide-react"; // Import icon
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+// Keep existing interfaces
+interface SingleDayResponse {
+  day: string;
+  total?: {
+    value: number;
+    relation: string;
+  };
+  [key: string]: unknown;
+}
+
+interface MultiDayResponse {
+  partial: boolean;
+  data: SingleDayResponse[];
+}
+
+export default function Home() {
+  // Keep all your existing state variables
+  const [chartData, setChartData] = useState<Array<{ date: string; count: number }>>([]);
+  const [partial, setPartial] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentKeyword, setCurrentKeyword] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>("keyword");
+
+  // Keep all your existing handler functions
+  async function handleQuerySubmit({ keyword }: { keyword: string }): Promise<void> {
+    setCurrentKeyword(keyword); setLoading(true); setError(null); setPartial(false); setChartData([]);
+    try { /* ... keep existing try/catch ... */
+        const response = await fetch("/api/threats", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ keyword }), });
+        if (!response.ok) { throw new Error(`Failed to fetch data. Status=${response.status}`); }
+        const json: MultiDayResponse = await response.json(); setPartial(json.partial);
+        const newChartData = json.data.map((dayObj) => ({ date: dayObj.day, count: dayObj.total?.value ?? 0, })).sort((a, b) => (a.date < b.date ? -1 : 1));
+        setChartData(newChartData);
+    } catch (err: unknown) { if (err instanceof Error) { setError(err.message); } else { setError("An unknown error occurred."); }
+    } finally { setLoading(false); }
+  }
+  async function handleAnnualSubmit({ keyword }: { keyword: string }): Promise<void> {
+     setCurrentKeyword(keyword); setLoading(true); setError(null);
+     try { /* ... keep existing try/catch ... */
+        const response = await fetch("/api/yearly", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ keyword }), });
+        if (!response.ok) { throw new Error(`Failed to fetch annual data. Status=${response.status}`); }
+        const blob = await response.blob(); const url = URL.createObjectURL(blob);
+        const downloadLink = document.createElement("a"); downloadLink.href = url; downloadLink.download = "annual_counts.csv";
+        document.body.appendChild(downloadLink); downloadLink.click(); document.body.removeChild(downloadLink); URL.revokeObjectURL(url);
+     } catch (err: unknown) { if (err instanceof Error) { setError(err.message); } else { setError("An unknown error occurred."); }
+     } finally { setLoading(false); }
+  }
+  async function handleMonthlySubmit({ keyword }: { keyword: string }): Promise<void> {
+    setCurrentKeyword(keyword); setLoading(true); setError(null);
+    try { /* ... keep existing try/catch ... */
+        const response = await fetch("/api/monthly", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ keyword }), });
+        if (!response.ok) { throw new Error(`Failed to fetch monthly data. Status=${response.status}`); }
+        const blob = await response.blob(); const url = URL.createObjectURL(blob);
+        const downloadLink = document.createElement("a"); downloadLink.href = url; downloadLink.download = "monthly_counts.csv";
+        document.body.appendChild(downloadLink); downloadLink.click(); document.body.removeChild(downloadLink); URL.revokeObjectURL(url);
+    } catch (err: unknown) { if (err instanceof Error) { setError(err.message); } else { setError("An unknown error occurred."); }
+    } finally { setLoading(false); }
+  }
+
+  // --- Return JSX ---
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        <Card className="border-0 shadow-lg dark:bg-slate-950">
+          <CardHeader className="pb-2 border-b">
+            {/* Keep your existing header content */}
+            <div className="flex items-center gap-3">
+               <div className="p-2 rounded-full bg-primary/10 text-primary"> <BarChart3 className="h-6 w-6" /> </div>
+               <div>
+                 <CardTitle className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+                   Threat Intelligence Dashboard
+                   {currentKeyword && (<span className="ml-2 text-foreground text-xl font-normal"> for &quot;<span className="font-semibold">{currentKeyword}</span>&quot; </span>)}
+                 </CardTitle>
+                 <CardDescription className="text-muted-foreground">FP Deep and Dark Web Results</CardDescription>
+               </div>
+            </div>
+          </CardHeader>
+
+          <CardContent className="p-6">
+
+            {/* === START: Vuln-STIX Navigation Section (Corrected Link Structure) === */}
+            <div className="mb-6 p-4 border rounded-lg bg-secondary/30 dark:bg-secondary/10">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold mb-1">Vulnerability STIX Tools</h2>
+                  <p className="text-sm text-muted-foreground">
+                    Generate STIX bundles from recent vulnerability data.
+                  </p>
+                </div>
+                {/* --- Use plain Link wrapping an <a> tag styled as a button --- */}
+                {/* --- Content (icon + text) now wrapped in a single <span> --- */}
+                <Link
+                  href="/vuln-stix"
+                  className={cn(
+                      buttonVariants({ variant: "outline" }), // Apply button styles
+                      "inline-flex items-center" // Keep flex for internal alignment
+                  )}
+                >
+                   <span className="flex items-center justify-center"> {/* Wrap content */}
+                       <DatabaseZap className="mr-2 h-4 w-4" />
+                       Go to Vuln-STIX Generator
+                   </span>
+                </Link>
+                 {/* --- End corrected link pattern --- */}
+              </div>
+            </div>
+            {/* === END: Vuln-STIX Navigation Section === */}
+
+
+            {/* Keep your existing Tabs component */}
+            <Tabs defaultValue="keyword" className="space-y-6" onValueChange={(value) => setActiveTab(value)} >
+              {/* Keep your existing TabsList */}
+                <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 gap-1 p-1 bg-muted/50 rounded-lg">
+                    <TabsTrigger value="keyword" className="text-xs md:text-sm relative font-medium data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:border-b-2 data-[state=active]:border-primary">Keyword (7d)</TabsTrigger>
+                    <TabsTrigger value="annual" className="text-xs md:text-sm relative font-medium data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:border-b-2 data-[state=active]:border-primary">Keyword (365d)</TabsTrigger>
+                    <TabsTrigger value="monthly" className="text-xs md:text-sm relative font-medium data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:border-b-2 data-[state=active]:border-primary">Keyword - Monthly</TabsTrigger>
+                    <TabsTrigger value="bulk-communities" className="text-xs md:text-sm relative font-medium data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:border-b-2 data-[state=active]:border-primary">Bulk - Communities</TabsTrigger>
+                    <TabsTrigger value="bulk-markets" className="text-xs md:text-sm relative font-medium data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:border-b-2 data-[state=active]:border-primary">Bulk - Markets</TabsTrigger>
+                    <TabsTrigger value="bulk-telegram" className="text-xs md:text-sm relative font-medium data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:border-b-2 data-[state=active]:border-primary">Bulk - Telegram</TabsTrigger>
+                </TabsList>
+
+              {/* Keep your existing TabsContent container */}
+              <div className="bg-card rounded-lg p-4 border shadow-sm">
+                <TabsContent value="keyword" className="mt-0"> <QueryForm onSubmit={handleQuerySubmit} placeholder="Enter keyword..." /> </TabsContent>
+                <TabsContent value="annual" className="mt-0"> <QueryForm onSubmit={handleAnnualSubmit} placeholder="Enter keyword for annual search..." /> </TabsContent>
+                <TabsContent value="monthly" className="mt-0"> <QueryForm onSubmit={handleMonthlySubmit} placeholder="Enter keyword for monthly search..." /> </TabsContent>
+                <TabsContent value="bulk-communities" className="mt-0"> <CsvUpload /> </TabsContent>
+                <TabsContent value="bulk-markets" className="mt-0"> <CsvUploadMarkets /> </TabsContent>
+                <TabsContent value="bulk-telegram" className="mt-0"> <CsvUploadTelegram /> </TabsContent>
+              </div>
+
+              {/* Keep your existing Loading/Error/Chart/No Data sections */}
+              {loading && ( <div className="flex items-center justify-center space-x-3 text-primary p-4 bg-primary/5 rounded-lg border border-primary/20 animate-pulse"><Loader2 className="animate-spin h-5 w-5" /><p className="font-medium">{/* Loading messages */}</p></div> )}
+              {error && ( <Alert variant="destructive" className="border border-destructive/20"><AlertTriangle className="h-5 w-5" /><AlertTitle className="font-semibold">Error</AlertTitle><AlertDescription>{error}</AlertDescription></Alert> )}
+              {partial && !error && ( <Alert variant="default" className="bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"><AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" /><AlertTitle className="font-semibold text-amber-800 dark:text-amber-300">Warning</AlertTitle><AlertDescription className="text-amber-700 dark:text-amber-400">We hit a rate limit or error partway. Showing partial results.</AlertDescription></Alert> )}
+              {chartData.length > 0 && activeTab === "keyword" && ( <div className="mt-6 bg-card rounded-lg p-4 border shadow-sm"><h3 className="text-lg font-semibold mb-4">Threat Analysis Results</h3><ThreatChart data={chartData} keyword={currentKeyword} /></div> )}
+              {!loading && !error && chartData.length === 0 && activeTab === "keyword" && ( <Alert className="bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800 mt-6"><InfoIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" /><AlertTitle className="font-semibold text-blue-800 dark:text-blue-300">No Data</AlertTitle><AlertDescription className="text-blue-700 dark:text-blue-400">Enter a keyword above to start analyzing threat data for the last 7 days.</AlertDescription></Alert> )}
+
+            </Tabs>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/app/stix_mapper.py">
+# stix_mapper.py (Corrected and Complete: Fixes syntax, imports, markings, adds simplified Software/Relationship)
+
+import json
+from datetime import datetime, timezone
+from stix2 import (Vulnerability, Software, Relationship, ExternalReference, Note, Bundle,
+                   TLP_WHITE, StatementMarking, MarkingDefinition)
+from stix2.utils import format_datetime # Only format_datetime needed from utils
+
+# --- Constants ---
+CVSSV3_EXTENSION_ID = "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017ac34"
+CVSSV2_EXTENSION_ID = "extension-definition--39fc358f-1069-482c-a033-80cd5676f1e6"
+TLP_WHITE_DEFINITION = MarkingDefinition(
+     id="marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9", # Stable ID for TLP:WHITE
+     definition_type="statement",
+     definition={"statement": "TLP:WHITE"}
+)
+
+# --- Helper Functions ---
+
+def parse_flashpoint_datetime(dt_string):
+    """Safely parses Flashpoint datetime strings into timezone-aware datetimes using built-in methods."""
+    if not dt_string:
+        return None
+    try:
+        needs_tz = 'Z' not in dt_string and '+' not in dt_string
+        if needs_tz:
+             parts = dt_string.split('T')
+             if len(parts) == 1: dt_string += "T00:00:00Z"
+             elif len(parts) == 2 and '-' not in parts[1].split(':')[-1]: dt_string += "Z"
+        if dt_string.endswith('Z'): dt_string = dt_string[:-1] + '+00:00'
+        dt_obj = datetime.fromisoformat(dt_string)
+        if dt_obj.tzinfo is None or dt_obj.tzinfo.utcoffset(dt_obj) is None:
+             print(f"Warning: Parsed datetime '{dt_string}' naive. Assuming UTC.")
+             return dt_obj.replace(tzinfo=timezone.utc)
+        return dt_obj
+    except Exception as e:
+        print(f"Warning: Could not parse datetime '{dt_string}': {e}")
+        return None
+
+def map_ext_ref_type(fp_ref_type):
+    """Maps Flashpoint reference type to STIX source_name or returns None."""
+    if not fp_ref_type: return None
+    fp_ref_type = fp_ref_type.lower()
+    if fp_ref_type == 'cve id': return 'cve'
+    elif fp_ref_type == 'cwe id': return 'cwe'
+    elif 'url' in fp_ref_type: return None
+    return None
+
+# --- Main Mapping Function ---
+
+def map_flashpoint_vuln_to_stix(fp_vuln_data):
+    """
+    Maps a single Flashpoint Vulnerability JSON object to a list of STIX 2.1 objects.
+    Includes base Software/Relationship mapping. Compatible with stix2==3.0.1.
+    """
+    if not fp_vuln_data or not fp_vuln_data.get('id'):
+         print("Warning: Insufficient data provided to map vulnerability (missing ID). Skipping.")
+         return []
+
+    stix_objects = []
+    software_cache = {} # Cache based on Vendor::Product name
+    fp_id = fp_vuln_data.get('id')
+    fp_title = fp_vuln_data.get('title')
+    fp_description = fp_vuln_data.get('description', '')
+    fp_solution = fp_vuln_data.get('solution')
+    fp_creditees = fp_vuln_data.get('creditees')
+
+    # --- Timestamps ---
+    timelines = fp_vuln_data.get('timelines', {})
+    if not isinstance(timelines, dict): timelines = {}
+    created_at = parse_flashpoint_datetime(timelines.get('published_at'))
+    modified_at = parse_flashpoint_datetime(timelines.get('last_modified_at'))
+    disclosed_at = parse_flashpoint_datetime(timelines.get('disclosed_at'))
+    exploit_published_at = parse_flashpoint_datetime(timelines.get('exploit_published_at'))
+
+    # --- External References ---
+    external_references = []
+    cve_ids_list = fp_vuln_data.get('cve_ids', [])
+    if isinstance(cve_ids_list, list):
+        for cve_id in cve_ids_list:
+             if cve_id and isinstance(cve_id, str): external_references.append(ExternalReference(source_name="cve", external_id=cve_id))
+    cwes_list = fp_vuln_data.get('cwes', [])
+    if isinstance(cwes_list, list):
+        for cwe_info in cwes_list:
+             if isinstance(cwe_info, dict):
+                 cwe_id_val = cwe_info.get('cwe_id')
+                 if cwe_id_val:
+                      try: external_references.append(ExternalReference(source_name="cwe", external_id=f"CWE-{int(cwe_id_val)}"))
+                      except (ValueError, TypeError): print(f"Warning: Invalid CWE ID format '{cwe_id_val}' for vuln {fp_id}")
+    ext_refs_list = fp_vuln_data.get('ext_references', [])
+    if isinstance(ext_refs_list, list):
+        for ref in ext_refs_list:
+             if not isinstance(ref, dict): continue
+             ref_type = ref.get('type'); ref_value = ref.get('value')
+             if not (ref_type and ref_value and isinstance(ref_value, str)): continue
+             source_name = map_ext_ref_type(ref_type)
+             if source_name:
+                 id_val = f"CWE-{ref_value}" if source_name == 'cwe' else ref_value
+                 is_duplicate = any(er.source_name == source_name and er.external_id == id_val for er in external_references)
+                 if not is_duplicate: external_references.append(ExternalReference(source_name=source_name, external_id=ref_value))
+             elif 'url' in ref_type.lower(): external_references.append(ExternalReference(source_name=ref_type, url=ref_value))
+    external_references.append(ExternalReference(source_name="Flashpoint Vulnerability Intelligence", description=f"Flashpoint Vulnerability ID: {fp_id}"))
+
+    # --- Labels ---
+    labels = []
+    tags_list = fp_vuln_data.get('tags', [])
+    if isinstance(tags_list, list):
+        for tag in tags_list:
+             if tag and isinstance(tag, str): labels.append(f"fp-tag:{tag}")
+    scores_dict = fp_vuln_data.get('scores', {})
+    if not isinstance(scores_dict, dict): scores_dict = {}
+    severity = scores_dict.get('severity')
+    if severity and isinstance(severity, str): labels.append(f"fp-severity:{severity.lower()}")
+    status = fp_vuln_data.get('vuln_status')
+    if status and isinstance(status, str): labels.append(f"fp-status:{status.lower()}")
+    classifications_list = fp_vuln_data.get('classifications', [])
+    if isinstance(classifications_list, list):
+        for classification in classifications_list:
+             if isinstance(classification, dict):
+                 class_name = classification.get('name')
+                 if class_name and isinstance(class_name, str): labels.append(f"fp-classification:{class_name}")
+    if exploit_published_at: labels.append("exploit-available")
+
+    # --- Description Enhancements ---
+    full_description = fp_description
+    if fp_solution: full_description += f"\n\nSolution: {fp_solution}"
+    if fp_creditees and isinstance(fp_creditees, list):
+        creds = ", ".join([c.get('name', 'Unknown') for c in fp_creditees if isinstance(c, dict) and c.get('name')])
+        if creds: full_description += f"\n\nCredits: {creds}"
+    if isinstance(disclosed_at, datetime): full_description += f"\n\nDisclosed On: {format_datetime(disclosed_at)}"
+    if isinstance(exploit_published_at, datetime): full_description += f"\n\nExploit Published On: {format_datetime(exploit_published_at)}"
+
+    # --- CVSS Scores and Extensions (Dictionary Method) ---
+    extensions = {}
+    cvss_v3_list = fp_vuln_data.get('cvss_v3s', [])
+    if cvss_v3_list and isinstance(cvss_v3_list, list) and cvss_v3_list:
+        cvss_v3_data = cvss_v3_list[0]
+        if isinstance(cvss_v3_data, dict):
+            # --- CORRECTED Syntax for score parsing ---
+            base_score_v3, temporal_score_v3 = None, None
+            try: # Parse scores safely
+                if cvss_v3_data.get('score') is not None:
+                    base_score_v3 = float(cvss_v3_data['score'])
+                if cvss_v3_data.get('temporal_score') is not None:
+                    temporal_score_v3 = float(cvss_v3_data['temporal_score'])
+            except (ValueError, TypeError):
+                print(f"Warning: Could not parse CVSSv3 score for vuln {fp_id}")
+                base_score_v3, temporal_score_v3 = None, None
+            # --- End Correction ---
+            cvss_v3_dict = { "spec_version": "3.1", "version": str(cvss_v3_data.get('version', '3.1')), "vectorString": cvss_v3_data.get('vector_string'), "baseScore": base_score_v3, "attackVector": cvss_v3_data.get('attack_vector'), "attackComplexity": cvss_v3_data.get('attack_complexity'), "privilegesRequired": cvss_v3_data.get('privileges_required'), "userInteraction": cvss_v3_data.get('user_interaction'), "scope": cvss_v3_data.get('scope'), "confidentialityImpact": cvss_v3_data.get('confidentiality_impact'), "integrityImpact": cvss_v3_data.get('integrity_impact'), "availabilityImpact": cvss_v3_data.get('availability_impact'), "exploitCodeMaturity": cvss_v3_data.get('exploit_code_maturity'), "remediationLevel": cvss_v3_data.get('remediation_level'), "reportConfidence": cvss_v3_data.get('report_confidence'), "temporalScore": temporal_score_v3, "baseSeverity": severity if severity else None }
+            cvss_v3_dict_filtered = {k: v for k, v in cvss_v3_dict.items() if v is not None}
+            if cvss_v3_dict_filtered: extensions[CVSSV3_EXTENSION_ID] = cvss_v3_dict_filtered
+
+    cvss_v2_list = fp_vuln_data.get('cvss_v2s', [])
+    if cvss_v2_list and isinstance(cvss_v2_list, list) and cvss_v2_list:
+        cvss_v2_data = cvss_v2_list[0]
+        if isinstance(cvss_v2_data, dict):
+            # --- CORRECTED Syntax for score parsing ---
+            base_score_v2 = None
+            try:
+                if cvss_v2_data.get('score') is not None:
+                    base_score_v2 = float(cvss_v2_data['score'])
+            except (ValueError, TypeError):
+                print(f"Warning: Could not parse CVSSv2 score for vuln {fp_id}")
+                base_score_v2 = None
+            # --- End Correction ---
+            cvss_v2_dict = { "spec_version": "2.0", "version": "2.0", "baseScore": base_score_v2, "accessVector": cvss_v2_data.get('access_vector'), "accessComplexity": cvss_v2_data.get('access_complexity'), "authentication": cvss_v2_data.get('authentication'), "confidentialityImpact": cvss_v2_data.get('confidentiality_impact'), "integrityImpact": cvss_v2_data.get('integrity_impact'), "availabilityImpact": cvss_v2_data.get('availability_impact'), }
+            cvss_v2_dict_filtered = {k: v for k, v in cvss_v2_dict.items() if v is not None}
+            if cvss_v2_dict_filtered: extensions[CVSSV2_EXTENSION_ID] = cvss_v2_dict_filtered
+
+    # --- Custom Properties ---
+    custom_props = {}
+    cvss_v4_list = fp_vuln_data.get('cvss_v4s', [])
+    if cvss_v4_list and isinstance(cvss_v4_list, list) and cvss_v4_list:
+        cvss_v4_data = cvss_v4_list[0]
+        if isinstance(cvss_v4_data, dict):
+            # --- CORRECTED Syntax for score parsing ---
+            base_score_v4, threat_score_v4 = None, None
+            try:
+                if cvss_v4_data.get('score') is not None: base_score_v4 = float(cvss_v4_data['score'])
+                if cvss_v4_data.get('threat_score') is not None: threat_score_v4 = float(cvss_v4_data['threat_score'])
+            except (ValueError, TypeError):
+                print(f"Warning: Could not parse CVSSv4 score for vuln {fp_id}")
+                base_score_v4, threat_score_v4 = None, None
+            # --- End Correction ---
+            cvss_v4_prop_dict = {k: v for k, v in cvss_v4_data.items() if v is not None}
+            if base_score_v4 is not None: cvss_v4_prop_dict['baseScore'] = base_score_v4
+            elif 'score' in cvss_v4_prop_dict: del cvss_v4_prop_dict['score']
+            if threat_score_v4 is not None: cvss_v4_prop_dict['threatScore'] = threat_score_v4
+            elif 'threat_score' in cvss_v4_prop_dict: del cvss_v4_prop_dict['threat_score']
+            if cvss_v4_prop_dict: custom_props['x_flashpoint_cvssv4'] = cvss_v4_prop_dict
+    epss_score = scores_dict.get('epss_score')
+    if epss_score is not None:
+        try: custom_props['x_flashpoint_epss_score'] = float(epss_score)
+        except (ValueError, TypeError): print(f"Warning: Could not parse EPSS score '{epss_score}' for vuln {fp_id}")
+
+    # --- Create Vulnerability Object ---
+    try:
+        vulnerability = Vulnerability(
+            name=fp_title or f"Flashpoint Vulnerability {fp_id}",
+            description=full_description,
+            created=created_at,
+            modified=modified_at,
+            external_references=external_references,
+            labels=sorted(list(set(labels))),
+            extensions=extensions if extensions else None,
+            object_marking_refs=[TLP_WHITE_DEFINITION.id], # Use ID
+            allow_custom=True,
+            **custom_props
+        )
+        stix_objects.append(vulnerability)
+    except Exception as e:
+        print(f"ERROR: Failed to create Vulnerability SDO for ID {fp_id}: {e}")
+        return [] # Skip this vulnerability if core object fails
+
+    # --- Process Affected Products (Vendor/Product Only - Updated Logic) ---
+    products_list = fp_vuln_data.get('products', [])
+    vendors_list = fp_vuln_data.get('vendors', []) # Get top-level vendors list
+
+    # Create a lookup map for vendor IDs to names for efficiency
+    vendor_map = {}
+    if isinstance(vendors_list, list):
+        vendor_map = {v.get('id'): v.get('name') for v in vendors_list if isinstance(v, dict) and v.get('id') and v.get('name')}
+
+    if isinstance(products_list, list):
+        for i, product_info in enumerate(products_list):
+            if not isinstance(product_info, dict): continue
+            product_name = product_info.get('name')
+            if not product_name: continue # Skip if no product name
+
+            vendor_name = None
+            # Attempt 1: Get vendor name directly from product object
+            vendor_name = product_info.get('vendor')
+            # Attempt 2: If not found, try lookup using vendor_id from product object
+            if not vendor_name:
+                vendor_id = product_info.get('vendor_id')
+                if vendor_id and vendor_id in vendor_map:
+                    vendor_name = vendor_map.get(vendor_id)
+            # Attempt 3: If still not found, assume positional correspondence if only 1 product/vendor
+            if not vendor_name and len(products_list) == 1 and len(vendors_list) == 1:
+                 if isinstance(vendors_list[0], dict):
+                      vendor_name = vendors_list[0].get('name')
+                      print(f"Info: Assuming single vendor '{vendor_name}' matches single product '{product_name}' for vuln {fp_id}")
+
+            # If we still couldn't determine a vendor name, skip
+            if not vendor_name:
+                 print(f"Warning: Could not determine vendor for product '{product_name}' (vuln {fp_id}). Skipping software/relationship creation.")
+                 continue
+
+            # Create Software object (NO VERSION)
+            cache_key = f"{vendor_name}::{product_name}" # Cache key
+
+            try: # Wrap software/relationship creation
+                if cache_key not in software_cache:
+                    software = Software( name=product_name, vendor=vendor_name,
+                        object_marking_refs=[TLP_WHITE_DEFINITION.id], allow_custom=True )
+                    stix_objects.append(software)
+                    software_cache[cache_key] = software
+                    print(f"Info: Created Software object for {product_name} by {vendor_name}")
+                else:
+                    software = software_cache[cache_key]
+                    print(f"Info: Reused cached Software object for {product_name} by {vendor_name}")
+
+                # Create Relationship: Vulnerability -> has -> Software
+                vuln_id_desc = next((ref.external_id for ref in external_references if ref.source_name == 'cve'), f"FP-{fp_id}")
+                rel_desc = f"Vulnerability {vuln_id_desc} affects {product_name} (by {vendor_name})"
+                rel = Relationship( vulnerability, 'has', software, description=rel_desc,
+                                    object_marking_refs=[TLP_WHITE_DEFINITION.id] )
+                stix_objects.append(rel)
+            except Exception as e_sw_rel:
+                print(f"ERROR: Failed creating base Software/Relationship for product '{product_name}' (vuln {fp_id}): {e_sw_rel}")
+
+    return stix_objects
+</file>
+
+<file path="src/components/ui/alert.tsx">
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const alertVariants = cva(
+  "relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7",
+  {
+    variants: {
+      variant: {
+        default: "bg-background text-foreground",
+        destructive:
+          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="alert"
+    className={cn(alertVariants({ variant }), className)}
+    {...props}
+  />
+))
+Alert.displayName = "Alert"
+
+const AlertTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h5
+    ref={ref}
+    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    {...props}
+  />
+))
+AlertTitle.displayName = "AlertTitle"
+
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
+))
+AlertDescription.displayName = "AlertDescription"
+
+export { Alert, AlertTitle, AlertDescription }
+</file>
+
+<file path="src/components/ui/button.tsx">
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-9 px-4 py-2",
+        sm: "h-8 rounded-md px-3 text-xs",
+        lg: "h-10 rounded-md px-8",
+        icon: "h-9 w-9",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
+</file>
+
+<file path="src/components/ui/card.tsx">
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-xl border bg-card text-card-foreground shadow",
+      className
+    )}
+    {...props}
+  />
+))
+Card.displayName = "Card"
+
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    {...props}
+  />
+))
+CardHeader.displayName = "CardHeader"
+
+const CardTitle = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("font-semibold leading-none tracking-tight", className)}
+    {...props}
+  />
+))
+CardTitle.displayName = "CardTitle"
+
+const CardDescription = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+CardDescription.displayName = "CardDescription"
+
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+))
+CardContent.displayName = "CardContent"
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+))
+CardFooter.displayName = "CardFooter"
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+</file>
+
+<file path="src/components/ui/command.tsx">
+"use client";
+// This stub completely removes cmdk to avoid build failures.
+// You won't have a working command palette, but it eliminates the lint/type errors.
+
+export function Command() {
+  // Return an empty placeholder or nothing at all.
+  return null;
+}
+</file>
+
+<file path="src/components/ui/dialog.tsx">
+"use client"
+
+import * as React from "react"
+import * as DialogPrimitive from "@radix-ui/react-dialog"
+import { X } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+const Dialog = DialogPrimitive.Root
+
+const DialogTrigger = DialogPrimitive.Trigger
+
+const DialogPortal = DialogPrimitive.Portal
+
+const DialogClose = DialogPrimitive.Close
+
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    ref={ref}
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+  />
+))
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </DialogPrimitive.Close>
+    </DialogPrimitive.Content>
+  </DialogPortal>
+))
+DialogContent.displayName = DialogPrimitive.Content.displayName
+
+const DialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-1.5 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+)
+DialogHeader.displayName = "DialogHeader"
+
+const DialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+)
+DialogFooter.displayName = "DialogFooter"
+
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+))
+DialogTitle.displayName = DialogPrimitive.Title.displayName
+
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+DialogDescription.displayName = DialogPrimitive.Description.displayName
+
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogTrigger,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+}
+</file>
+
+<file path="src/components/ui/input.tsx">
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
+  ({ className, type, ...props }, ref) => {
+    return (
+      <input
+        type={type}
+        className={cn(
+          "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Input.displayName = "Input"
+
+export { Input }
+</file>
+
+<file path="src/components/ui/popover.tsx">
+"use client"
+
+import * as React from "react"
+import * as PopoverPrimitive from "@radix-ui/react-popover"
+
+import { cn } from "@/lib/utils"
+
+const Popover = PopoverPrimitive.Root
+
+const PopoverTrigger = PopoverPrimitive.Trigger
+
+const PopoverAnchor = PopoverPrimitive.Anchor
+
+const PopoverContent = React.forwardRef<
+  React.ElementRef<typeof PopoverPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
+>(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+  <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Content
+      ref={ref}
+      align={align}
+      sideOffset={sideOffset}
+      className={cn(
+        "z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        className
+      )}
+      {...props}
+    />
+  </PopoverPrimitive.Portal>
+))
+PopoverContent.displayName = PopoverPrimitive.Content.displayName
+
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor }
+</file>
+
+<file path="src/components/ui/tabs.tsx">
+"use client"
+
+import * as React from "react"
+import * as TabsPrimitive from "@radix-ui/react-tabs"
+import { cn } from "@/lib/utils" // or your own utility for combining class names
+
+export const Tabs = TabsPrimitive.Root
+export const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List
+    ref={ref}
+    className={cn("inline-flex items-center", className)}
+    {...props}
+  />
+))
+TabsList.displayName = TabsPrimitive.List.displayName
+
+export const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={cn("inline-flex items-center justify-center", className)}
+    {...props}
+  />
+))
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+
+export const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content ref={ref} className={cn("mt-2", className)} {...props} />
+))
+TabsContent.displayName = TabsPrimitive.Content.displayName
+</file>
+
+<file path="src/components/CsvUpload.tsx">
+"use client";
+
+import { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { UploadIcon, AlertCircleIcon, CheckCircleIcon } from "lucide-react";
+
+export default function CsvUpload() {
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
+  const [processing, setProcessing] = useState<boolean>(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setWarning(null);
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile && selectedFile.type === "text/csv") {
+      setFile(selectedFile);
+      setError(null);
+      setDownloadUrl(null);
+    } else {
+      setFile(null);
+      setError("Please select a valid CSV file.");
+      setDownloadUrl(null);
+    }
+  };
+
+  const handleUpload = async (): Promise<void> => {
+    if (!file) {
+      setError("Please select a CSV file first.");
+      return;
+    }
+
+    // Read CSV file as text and count non-empty lines
+    const csvText = await file.text();
+    const lines = csvText.split("\n").filter((line) => line.trim() !== "");
+    if (lines.length > 80) {
+      setWarning("Warning: Please do not upload a CSV with more than 80 lines.");
+      return;
+    }
+
+    setProcessing(true);
+    setError(null);
+    setWarning(null);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/bulk", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        setError(errData.error || "Error uploading file.");
+        setProcessing(false);
+        return;
+      }
+
+      // Get the response blob (CSV file)
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setDownloadUrl(url);
+    } catch {
+      setError("An error occurred while uploading the file.");
+    } finally {
+      setProcessing(false);
+      setFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleDownload = (): void => {
+    if (downloadUrl) {
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "daily_counts.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(downloadUrl);
+      setDownloadUrl(null);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center space-x-2">
+        <Input
+          type="file"
+          accept=".csv"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          className="flex-grow"
+        />
+        <Button onClick={handleUpload} disabled={!file || processing}>
+          <UploadIcon className="mr-2 h-4 w-4" />
+          Upload CSV
+        </Button>
+      </div>
+
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircleIcon className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {warning && (
+        <Alert variant="destructive" className="mt-4">
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription>{warning}</AlertDescription>
+        </Alert>
+      )}
+
+      {processing && (
+        <Alert variant="default" className="mt-4">
+          <AlertTitle>Processing</AlertTitle>
+          <AlertDescription>
+            Upload received, please wait to download results...
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {downloadUrl && (
+        <div className="mt-4 space-y-2">
+          <Alert variant="default">
+            <CheckCircleIcon className="h-4 w-4 text-green-400" />
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription>Your CSV is ready for download.</AlertDescription>
+          </Alert>
+          <Button onClick={handleDownload}>Download CSV</Button>
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/CsvUploadMarkets.tsx">
+"use client";
+
+import { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { UploadIcon, AlertCircleIcon, CheckCircleIcon } from "lucide-react";
+
+export default function CsvUploadMarkets() {
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
+  const [processing, setProcessing] = useState<boolean>(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setWarning(null);
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile && selectedFile.type === "text/csv") {
+      setFile(selectedFile);
+      setError(null);
+      setDownloadUrl(null);
+    } else {
+      setFile(null);
+      setError("Please select a valid CSV file.");
+      setDownloadUrl(null);
+    }
+  };
+
+  const handleUpload = async (): Promise<void> => {
+    if (!file) {
+      setError("Please select a CSV file first.");
+      return;
+    }
+
+    // Read CSV file as text and count non-empty lines
+    const csvText = await file.text();
+    const lines = csvText.split("\n").filter((line) => line.trim() !== "");
+    if (lines.length > 80) {
+      setWarning("Warning: Please do not upload a CSV with more than 80 lines.");
+      return;
+    }
+
+    setProcessing(true);
+    setError(null);
+    setWarning(null);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/markets", {  // Use the new endpoint here
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        setError(errData.error || "Error uploading file.");
+        setProcessing(false);
+        return;
+      }
+
+      // Get the response blob (CSV file)
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setDownloadUrl(url);
+    } catch {
+      setError("An error occurred while uploading the file.");
+    } finally {
+      setProcessing(false);
+      setFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleDownload = (): void => {
+    if (downloadUrl) {
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "market_counts.csv"; // New filename for Markets data
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(downloadUrl);
+      setDownloadUrl(null);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center space-x-2">
+        <Input
+          type="file"
+          accept=".csv"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          className="flex-grow"
+        />
+        <Button onClick={handleUpload} disabled={!file || processing}>
+          <UploadIcon className="mr-2 h-4 w-4" />
+          Upload CSV
+        </Button>
+      </div>
+
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircleIcon className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
+      {warning && (
+        <Alert variant="destructive" className="mt-4">
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription>{warning}</AlertDescription>
+        </Alert>
+      )}
+
+      {processing && (
+        <Alert variant="default" className="mt-4">
+          <AlertTitle>Processing</AlertTitle>
+          <AlertDescription>
+            Upload received, please wait to download results...
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {downloadUrl && (
+        <div className="mt-4 space-y-2">
+          <Alert variant="default">
+            <CheckCircleIcon className="h-4 w-4 text-green-400" />
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription>Your CSV is ready for download.</AlertDescription>
+          </Alert>
+          <Button onClick={handleDownload}>Download CSV</Button>
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/CsvUploadTelegram.tsx">
+"use client";
+
+import { useState, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { UploadIcon, AlertCircleIcon, CheckCircleIcon } from "lucide-react";
+
+export default function CsvUploadTelegram() {
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
+  const [processing, setProcessing] = useState<boolean>(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setWarning(null);
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile && selectedFile.type === "text/csv") {
+      setFile(selectedFile);
+      setError(null);
+      setDownloadUrl(null);
+    } else {
+      setFile(null);
+      setError("Please select a valid CSV file.");
+      setDownloadUrl(null);
+    }
+  };
+
+  const handleUpload = async (): Promise<void> => {
+    if (!file) {
+      setError("Please select a CSV file first.");
+      return;
+    }
+    // Read CSV file as text and count non-empty lines
+    const csvText = await file.text();
+    const lines = csvText.split("\n").filter((line) => line.trim() !== "");
+    if (lines.length > 80) {
+      setWarning("Warning: Please do not upload a CSV with more than 80 lines.");
+      return;
+    }
+    setProcessing(true);
+    setError(null);
+    setWarning(null);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await fetch("/api/telegram", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) {
+        const errData = await res.json();
+        setError(errData.error || "Error uploading file.");
+        setProcessing(false);
+        return;
+      }
+      // Get the response blob (CSV file)
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setDownloadUrl(url);
+    } catch {
+      setError("An error occurred while uploading the file.");
+    } finally {
+      setProcessing(false);
+      setFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleDownload = (): void => {
+    if (downloadUrl) {
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "telegram_counts.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(downloadUrl);
+      setDownloadUrl(null);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center space-x-2">
+        <Input
+          type="file"
+          accept=".csv"
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          className="flex-grow"
+        />
+        <Button onClick={handleUpload} disabled={!file || processing}>
+          <UploadIcon className="mr-2 h-4 w-4" />
+          Upload CSV
+        </Button>
+      </div>
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircleIcon className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+      {warning && (
+        <Alert variant="destructive" className="mt-4">
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription>{warning}</AlertDescription>
+        </Alert>
+      )}
+      {processing && (
+        <Alert variant="default" className="mt-4">
+          <AlertTitle>Processing</AlertTitle>
+          <AlertDescription>
+            Upload received, please wait to download results...
+          </AlertDescription>
+        </Alert>
+      )}
+      {downloadUrl && (
+        <div className="mt-4 space-y-2">
+          <Alert variant="default">
+            <CheckCircleIcon className="h-4 w-4 text-green-400" />
+            <AlertTitle>Success</AlertTitle>
+            <AlertDescription>Your CSV is ready for download.</AlertDescription>
+          </Alert>
+          <Button onClick={handleDownload}>Download CSV</Button>
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/QueryForm.tsx">
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SearchIcon } from "lucide-react";
+
+export interface QueryFormProps {
+  onSubmit: (data: { keyword: string }) => void;
+  placeholder?: string;
+}
+
+export default function QueryForm({ onSubmit, placeholder }: QueryFormProps) {
+  const [keyword, setKeyword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({ keyword });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="flex space-x-2">
+      <Input
+        type="text"
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
+        placeholder={placeholder || "Enter keyword..."}
+        className="flex-grow"
+      />
+      <Button type="submit" disabled={!keyword.trim()}>
+        <SearchIcon className="mr-2 h-4 w-4" />
+        Search
+      </Button>
+    </form>
+  );
+}
+</file>
+
+<file path="src/components/ThreatChart.tsx">
+"use client";
+
+import { useRef } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label } from "recharts";
+import { DownloadIcon, ImageIcon } from "lucide-react";
+
+interface ThreatChartProps {
+  data: Array<{ date: string; count: number }>;
+  keyword?: string;
+}
+
+interface CustomizedLabelProps {
+  x: number;
+  y: number;
+  value: string | number;
+}
+
+const CustomizedLabel = (props: CustomizedLabelProps) => {
+  const { x, y, value } = props;
+  return (
+    <text x={x} y={y} dy={-10} fill="#000" fontSize={12} textAnchor="middle">
+      {value}
+    </text>
+  );
+};
+
+const formatXAxis = (tickItem: string): string => {
+  const date = new Date(tickItem);
+  return `${date.getMonth() + 1}-${date.getDate()}`;
+};
+
+export default function ThreatChart({ data, keyword }: ThreatChartProps) {
+  const chartRef = useRef<HTMLDivElement>(null);
+
+  const exportToPng = (): void => {
+    if (chartRef.current) {
+      const svgElement = chartRef.current.querySelector("svg");
+      if (svgElement) {
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const rect = svgElement.getBoundingClientRect();
+        const extraHeight = 40; // Extra space for the keyword header
+
+        // Create a canvas that is as wide as the chart, but taller to allow for a header
+        const canvas = document.createElement("canvas");
+        canvas.width = rect.width;
+        canvas.height = rect.height + extraHeight;
+        const ctx = canvas.getContext("2d");
+
+        if (ctx) {
+          // Fill the entire canvas with white
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // If a keyword is provided, draw it at the top center
+          if (keyword) {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#000000";
+            ctx.textAlign = "center";
+            ctx.fillText(`Keyword: ${keyword}`, canvas.width / 2, 20);
+          }
+        }
+
+        const img = new Image();
+        img.onload = () => {
+          // Draw the chart image starting at vertical offset equal to extraHeight
+          ctx?.drawImage(img, 0, extraHeight);
+          const pngFile = canvas.toDataURL("image/png");
+          const downloadLink = document.createElement("a");
+          downloadLink.download = "threat_chart.png";
+          downloadLink.href = pngFile;
+          downloadLink.click();
+        };
+
+        // Encode the SVG data to base64
+        img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+      }
+    }
+  };
+
+  const exportToCsv = (): void => {
+    const keywordHeader = keyword ? `Keyword: ${keyword}\n` : "";
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      keywordHeader +
+      "Date,Count\n" +
+      data.map((row) => `${row.date},${row.count}`).join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "threat_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          Deep and Dark Web Mentions {keyword ? `for "${keyword}"` : ""}
+        </CardTitle>
+        <CardDescription>Daily count over last 7 days</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[400px]" ref={chartRef}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data} margin={{ top: 20, right: 30, left: 60, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" tickFormatter={formatXAxis} padding={{ left: 30, right: 30 }}>
+                <Label value="Date" offset={-5} position="insideBottom" />
+              </XAxis>
+              <YAxis>
+                <Label value="Count" angle={-90} position="insideLeft" style={{ textAnchor: "middle" }} />
+              </YAxis>
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="count"
+                stroke="#3b82f6"
+                strokeWidth={2}
+                dot={{ r: 4 }}
+                label={(props) => <CustomizedLabel {...(props as CustomizedLabelProps)} />}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="mt-4 flex justify-end space-x-2">
+          <Button variant="outline" onClick={exportToPng}>
+            <ImageIcon className="mr-2 h-4 w-4" />
+            Export as PNG
+          </Button>
+          <Button variant="outline" onClick={exportToCsv}>
+            <DownloadIcon className="mr-2 h-4 w-4" />
+            Export as CSV
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+</file>
+
+<file path="src/lib/utils.ts">
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+</file>
+
+<file path="stix-backend/.gitignore">
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+.env
+data/latest_stix_bundle.json # Optionally ignore the generated bundle itself
+</file>
+
+<file path="stix-backend/app.py">
+# app.py (FINAL: Corrected SyntaxError in HTTPError handling AND restored multi-value 'solution')
+
+import os
+import requests
+import json
+import math
+import traceback
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
+from datetime import datetime, timezone
+
+# Import from stix_mapper and stix2
+from stix_mapper import map_flashpoint_vuln_to_stix, TLP_WHITE_DEFINITION
+from stix2 import Bundle
+
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+FP_API_KEY = os.environ.get('FP_API_KEY')
+FP_VULN_API_URL = os.environ.get('FP_VULN_API_URL')
+FP_API_PAGE_SIZE = int(os.environ.get('FP_API_PAGE_SIZE', 500))
+
+# Configuration
+STIX_BUNDLE_DIR = "data"
+STIX_BUNDLE_FILENAME = "latest_stix_bundle.json"
+STIX_BUNDLE_PATH = os.path.join(STIX_BUNDLE_DIR, STIX_BUNDLE_FILENAME)
+
+# --- Flask App Setup ---
+app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "https://your-nextjs-production-domain.com"]}}) # Adjust origins
+os.makedirs(STIX_BUNDLE_DIR, exist_ok=True)
+
+
+# --- API Helper Function with Pagination ---
+def get_all_flashpoint_vulnerabilities(params):
+    """Queries the Flashpoint API with pagination to get ALL matching vulnerabilities."""
+    if not FP_API_KEY: return {"error": "FP_API_KEY not configured in backend environment."}
+    if not FP_VULN_API_URL: return {"error": "FP_VULN_API_URL not configured in backend environment."}
+
+    headers = {"Authorization": f"Bearer {FP_API_KEY}", "Accept": "application/json"}
+    api_url = f"{FP_VULN_API_URL}/vulnerabilities"
+    all_vulnerabilities = []
+    current_page = 0
+    page_size = FP_API_PAGE_SIZE
+    total_hits = None
+    max_pages = 100
+
+    print(f"Starting vulnerability fetch. Base URL: {api_url}, Initial Params: {params}")
+
+    while True:
+        page_params = params.copy()
+        page_params['from'] = current_page * page_size
+        page_params['size'] = page_size
+        print(f"Querying page {current_page + 1}... (from={page_params['from']}, size={page_params['size']})")
+
+        try:
+            response = requests.get(api_url, headers=headers, params=page_params, timeout=90)
+            print(f"-> Request URL: {response.url}")
+            response.raise_for_status()
+            data = response.json()
+            # print(f"-> Raw API Response (Page {current_page + 1}): {json.dumps(data, indent=2)}") # Keep commented unless needed
+
+            # Use 'results' key logic
+            page_vulnerabilities = data.get('results', None)
+            if page_vulnerabilities is None:
+                 page_vulnerabilities = data.get('data', [])
+                 if not isinstance(page_vulnerabilities, list):
+                      hits_data = data.get('hits', {})
+                      if isinstance(hits_data, dict): page_vulnerabilities = hits_data.get('hits', [])
+                      if not isinstance(page_vulnerabilities, list):
+                           print(f"Error: Could not find vulnerability list under 'results', 'data', or 'hits.hits'. Keys: {list(data.keys())}")
+                           return {"error": "Unexpected API response structure: results list key not found."}
+            elif not isinstance(page_vulnerabilities, list):
+                 print(f"Error: Expected a list for 'results' key, got {type(page_vulnerabilities)}. Keys: {list(data.keys())}")
+                 return {"error": "Unexpected API response structure: 'results' key did not contain a list."}
+
+            all_vulnerabilities.extend(page_vulnerabilities)
+
+            # Robust total_hits extraction
+            if total_hits is None:
+                raw_total = data.get('total_hits', data.get('total', None)); total_hits_val = None
+                if isinstance(raw_total, dict): total_hits_val = raw_total.get('value')
+                elif isinstance(raw_total, (int, str)): total_hits_val = raw_total
+                if total_hits_val is not None:
+                    try: total_hits = int(total_hits_val); print(f"Total potential hits: {total_hits}")
+                    except (ValueError, TypeError): total_hits = None; print(f"Warn: Bad total hits '{total_hits_val}'")
+                else: total_hits = None; print("Warn: Total hits not found.")
+
+            num_returned = len(page_vulnerabilities)
+            print(f"-> Got {num_returned} results on this page.")
+
+            # Stop conditions
+            if total_hits == 0: break
+            if total_hits is not None and len(all_vulnerabilities) >= total_hits: break
+            if data.get("next") is None and num_returned > 0: break
+            if num_returned < page_size: break
+            if current_page >= max_pages -1 : print(f"Warn: Max pages reached."); break
+            current_page += 1
+
+        except requests.exceptions.Timeout:
+             error_msg = f"API Timeout page {current_page + 1}."; print(f"Error: {error_msg}"); return {"error": error_msg}
+        # --- *** SYNTAX CORRECTED HTTPError Handling *** ---
+        except requests.exceptions.HTTPError as e:
+             error_detail = f"{e.response.status_code}: " # Get status code first
+             try:
+                  # Try appending response text on separate lines inside try block
+                  error_detail += e.response.text[:500] # Limit error text length
+             except Exception:
+                  error_detail += "(Could not read response body)"
+             # Ensure print and return are outside the inner try/except, but inside the outer except
+             print(f"Error: HTTP Error on page {current_page + 1}: {error_detail}")
+             return {"error": f"API HTTP Error on page {current_page + 1}: {error_detail}"}
+        # --- *** End Correction *** ---
+        except requests.exceptions.RequestException as e: print(f"Error: Network/Request Error on page {current_page + 1}: {e}"); return {"error": f"API Request Failed on page {current_page + 1}: {e}"}
+        except json.JSONDecodeError as e: print(f"Error: Failed to decode JSON on page {current_page + 1}: {e}"); return {"error": f"API JSON Decode Error on page {current_page + 1}."}
+        except Exception as e: print(f"Error: Unexpected error during pagination: {traceback.format_exc()}"); return {"error": f"Unexpected error during pagination: {e}"}
+
+    print(f"Total vulnerabilities fetched: {len(all_vulnerabilities)}")
+    return {"vulnerabilities": all_vulnerabilities}
+
+
+# --- API Endpoints ---
+
+@app.route('/api/generate_test_bundle', methods=['POST'])
+def generate_test_bundle_api():
+    """API endpoint to trigger bundle generation using fixed criteria."""
+    print(f"[{datetime.now()}] Received API request to generate test bundle...")
+
+    # --- Parameters with multi-value solution restored ---
+    params = {
+        "published_after": "-14d",
+        "exploit": "public",
+        "solution": "change_default,patch,upgrade,workaround", # Restored full list
+        "location": "remote"
+    }
+    # --- End Parameters ---
+
+    print(f"Using filter parameters: {params}") # Log the exact params being used
+
+    result = get_all_flashpoint_vulnerabilities(params)
+    if "error" in result:
+        print(f"Error during fetch: {result['error']}")
+        return jsonify({"status": "error", "message": result["error"]}), 500
+
+    vulnerabilities = result.get("vulnerabilities", [])
+    if not vulnerabilities:
+        print("No vulnerabilities found matching criteria with current filters.")
+        return jsonify({"status": "warning", "message": "No vulnerabilities found matching the specified criteria."}), 200
+
+    print(f"Found {len(vulnerabilities)} matching vulnerabilities. Converting to STIX...")
+    # (Rest of STIX conversion, bundling, saving logic remains the same)
+    all_stix_objects = []
+    processed_count = 0; conversion_errors = 0
+    for vuln_data in vulnerabilities:
+        try:
+            stix_objs_for_vuln = map_flashpoint_vuln_to_stix(vuln_data)
+            all_stix_objects.extend(stix_objs_for_vuln)
+            processed_count += 1
+        except Exception as map_err: conversion_errors += 1; vuln_id_err = vuln_data.get('id', 'UNKNOWN'); print(f"Error mapping ID {vuln_id_err}: {map_err}\n{traceback.format_exc()}")
+    print(f"Processed {processed_count} vulnerabilities. Generated {len(all_stix_objects)} STIX objects. Encountered {conversion_errors} mapping errors.")
+    if not all_stix_objects:
+        err_msg = "No STIX objects generated despite finding vulnerabilities.";
+        if conversion_errors > 0: err_msg += f" Check logs for {conversion_errors} mapping errors."
+        else: err_msg += " Check mapping logic or source data structure."
+        print(f"Warning: {err_msg}"); return jsonify({"status": "warning", "message": err_msg}), 200
+    try:
+        bundle = Bundle(objects=all_stix_objects + [TLP_WHITE_DEFINITION], allow_custom=True)
+        bundle_json = bundle.serialize(indent=2)
+        os.makedirs(STIX_BUNDLE_DIR, exist_ok=True)
+        with open(STIX_BUNDLE_PATH, "w", encoding="utf-8") as f: f.write(bundle_json)
+        save_msg = f"Bundle generated: {len(all_stix_objects)} objects saved ({len(vulnerabilities)} source vulns)."
+        if conversion_errors > 0: save_msg += f" ({conversion_errors} mapping errors occurred - see logs)"
+        print(f"[{datetime.now()}] Successfully saved STIX bundle to {STIX_BUNDLE_PATH}")
+        return jsonify({"status": "success", "message": save_msg}), 200
+    except Exception as e: print(f"Error creating/saving STIX bundle: {traceback.format_exc()}"); return jsonify({"status": "error", "message": f"Failed to create/save bundle: {e}"}), 500
+
+
+@app.route('/api/stix_bundle.json', methods=['GET'])
+def get_stix_bundle_api():
+    # (Keep as before)
+    print(f"[{datetime.now()}] Request received for /api/stix_bundle.json")
+    if not os.path.exists(STIX_BUNDLE_PATH): print("Bundle file not found."); return jsonify({"error": "STIX bundle has not been generated yet."}), 404
+    try: print(f"Serving bundle file from {STIX_BUNDLE_PATH}"); return send_from_directory( STIX_BUNDLE_DIR, STIX_BUNDLE_FILENAME, mimetype='application/json', as_attachment=False )
+    except Exception as e: print(f"Error serving bundle file: {traceback.format_exc()}"); return jsonify({"error": f"Failed to serve bundle file: {e}"}), 500
+
+# --- Run the App ---
+if __name__ == '__main__':
+    # (Keep checks and run command as before)
+    if not FP_API_KEY: print("ERROR: FP_API_KEY must be set in .env file!")
+    if not FP_VULN_API_URL: print("ERROR: FP_VULN_API_URL must be set in .env file!")
+    if FP_API_KEY and FP_VULN_API_URL:
+         print(f"Starting Flask API server for STIX generation...")
+         # ... (rest of startup messages) ...
+         app.run(debug=True, port=5001, host='127.0.0.1')
+    else:
+         print("Exiting due to missing environment variables.")
+</file>
+
+<file path="stix-backend/requirements.txt">
+Flask>=2.0
+Flask-CORS>=3.0
+requests>=2.25
+stix2>=3.0
+python-dotenv>=0.15
+</file>
+
+<file path="stix-backend/stix_mapper.py">
+# stix_mapper.py (Corrected and Complete: Fixes syntax, imports, markings, adds simplified Software/Relationship)
+
+import json
+from datetime import datetime, timezone
+from stix2 import (Vulnerability, Software, Relationship, ExternalReference, Note, Bundle,
+                   TLP_WHITE, StatementMarking, MarkingDefinition)
+from stix2.utils import format_datetime # Only format_datetime needed from utils
+
+# --- Constants ---
+CVSSV3_EXTENSION_ID = "extension-definition--66e2492a-bbd3-4be6-88f5-cc91a017ac34"
+CVSSV2_EXTENSION_ID = "extension-definition--39fc358f-1069-482c-a033-80cd5676f1e6"
+TLP_WHITE_DEFINITION = MarkingDefinition(
+     id="marking-definition--613f2e26-407d-48c7-9eca-b8e91df99dc9", # Stable ID for TLP:WHITE
+     definition_type="statement",
+     definition={"statement": "TLP:WHITE"}
+)
+
+# --- Helper Functions ---
+
+def parse_flashpoint_datetime(dt_string):
+    """Safely parses Flashpoint datetime strings into timezone-aware datetimes using built-in methods."""
+    if not dt_string:
+        return None
+    try:
+        needs_tz = 'Z' not in dt_string and '+' not in dt_string
+        if needs_tz:
+             parts = dt_string.split('T')
+             if len(parts) == 1: dt_string += "T00:00:00Z"
+             elif len(parts) == 2 and '-' not in parts[1].split(':')[-1]: dt_string += "Z"
+        if dt_string.endswith('Z'): dt_string = dt_string[:-1] + '+00:00'
+        dt_obj = datetime.fromisoformat(dt_string)
+        if dt_obj.tzinfo is None or dt_obj.tzinfo.utcoffset(dt_obj) is None:
+             print(f"Warning: Parsed datetime '{dt_string}' naive. Assuming UTC.")
+             return dt_obj.replace(tzinfo=timezone.utc)
+        return dt_obj
+    except Exception as e:
+        print(f"Warning: Could not parse datetime '{dt_string}': {e}")
+        return None
+
+def map_ext_ref_type(fp_ref_type):
+    """Maps Flashpoint reference type to STIX source_name or returns None."""
+    if not fp_ref_type: return None
+    fp_ref_type = fp_ref_type.lower()
+    if fp_ref_type == 'cve id': return 'cve'
+    elif fp_ref_type == 'cwe id': return 'cwe'
+    elif 'url' in fp_ref_type: return None
+    return None
+
+# --- Main Mapping Function ---
+
+def map_flashpoint_vuln_to_stix(fp_vuln_data):
+    """
+    Maps a single Flashpoint Vulnerability JSON object to a list of STIX 2.1 objects.
+    Includes base Software/Relationship mapping. Compatible with stix2==3.0.1.
+    """
+    if not fp_vuln_data or not fp_vuln_data.get('id'):
+         print("Warning: Insufficient data provided to map vulnerability (missing ID). Skipping.")
+         return []
+
+    stix_objects = []
+    software_cache = {} # Cache based on Vendor::Product name
+    fp_id = fp_vuln_data.get('id')
+    fp_title = fp_vuln_data.get('title')
+    fp_description = fp_vuln_data.get('description', '')
+    fp_solution = fp_vuln_data.get('solution')
+    fp_creditees = fp_vuln_data.get('creditees')
+
+    # --- Timestamps ---
+    timelines = fp_vuln_data.get('timelines', {})
+    if not isinstance(timelines, dict): timelines = {}
+    created_at = parse_flashpoint_datetime(timelines.get('published_at'))
+    modified_at = parse_flashpoint_datetime(timelines.get('last_modified_at'))
+    disclosed_at = parse_flashpoint_datetime(timelines.get('disclosed_at'))
+    exploit_published_at = parse_flashpoint_datetime(timelines.get('exploit_published_at'))
+
+    # --- External References ---
+    external_references = []
+    cve_ids_list = fp_vuln_data.get('cve_ids', [])
+    if isinstance(cve_ids_list, list):
+        for cve_id in cve_ids_list:
+             if cve_id and isinstance(cve_id, str): external_references.append(ExternalReference(source_name="cve", external_id=cve_id))
+    cwes_list = fp_vuln_data.get('cwes', [])
+    if isinstance(cwes_list, list):
+        for cwe_info in cwes_list:
+             if isinstance(cwe_info, dict):
+                 cwe_id_val = cwe_info.get('cwe_id')
+                 if cwe_id_val:
+                      try: external_references.append(ExternalReference(source_name="cwe", external_id=f"CWE-{int(cwe_id_val)}"))
+                      except (ValueError, TypeError): print(f"Warning: Invalid CWE ID format '{cwe_id_val}' for vuln {fp_id}")
+    ext_refs_list = fp_vuln_data.get('ext_references', [])
+    if isinstance(ext_refs_list, list):
+        for ref in ext_refs_list:
+             if not isinstance(ref, dict): continue
+             ref_type = ref.get('type'); ref_value = ref.get('value')
+             if not (ref_type and ref_value and isinstance(ref_value, str)): continue
+             source_name = map_ext_ref_type(ref_type)
+             if source_name:
+                 id_val = f"CWE-{ref_value}" if source_name == 'cwe' else ref_value
+                 is_duplicate = any(er.source_name == source_name and er.external_id == id_val for er in external_references)
+                 if not is_duplicate: external_references.append(ExternalReference(source_name=source_name, external_id=ref_value))
+             elif 'url' in ref_type.lower(): external_references.append(ExternalReference(source_name=ref_type, url=ref_value))
+    external_references.append(ExternalReference(source_name="Flashpoint Vulnerability Intelligence", description=f"Flashpoint Vulnerability ID: {fp_id}"))
+
+    # --- Labels ---
+    labels = []
+    tags_list = fp_vuln_data.get('tags', [])
+    if isinstance(tags_list, list):
+        for tag in tags_list:
+             if tag and isinstance(tag, str): labels.append(f"fp-tag:{tag}")
+    scores_dict = fp_vuln_data.get('scores', {})
+    if not isinstance(scores_dict, dict): scores_dict = {}
+    severity = scores_dict.get('severity')
+    if severity and isinstance(severity, str): labels.append(f"fp-severity:{severity.lower()}")
+    status = fp_vuln_data.get('vuln_status')
+    if status and isinstance(status, str): labels.append(f"fp-status:{status.lower()}")
+    classifications_list = fp_vuln_data.get('classifications', [])
+    if isinstance(classifications_list, list):
+        for classification in classifications_list:
+             if isinstance(classification, dict):
+                 class_name = classification.get('name')
+                 if class_name and isinstance(class_name, str): labels.append(f"fp-classification:{class_name}")
+    if exploit_published_at: labels.append("exploit-available")
+
+    # --- Description Enhancements ---
+    full_description = fp_description
+    if fp_solution: full_description += f"\n\nSolution: {fp_solution}"
+    if fp_creditees and isinstance(fp_creditees, list):
+        creds = ", ".join([c.get('name', 'Unknown') for c in fp_creditees if isinstance(c, dict) and c.get('name')])
+        if creds: full_description += f"\n\nCredits: {creds}"
+    if isinstance(disclosed_at, datetime): full_description += f"\n\nDisclosed On: {format_datetime(disclosed_at)}"
+    if isinstance(exploit_published_at, datetime): full_description += f"\n\nExploit Published On: {format_datetime(exploit_published_at)}"
+
+    # --- CVSS Scores and Extensions (Dictionary Method) ---
+    extensions = {}
+    cvss_v3_list = fp_vuln_data.get('cvss_v3s', [])
+    if cvss_v3_list and isinstance(cvss_v3_list, list) and cvss_v3_list:
+        cvss_v3_data = cvss_v3_list[0]
+        if isinstance(cvss_v3_data, dict):
+            # --- CORRECTED Syntax for score parsing ---
+            base_score_v3, temporal_score_v3 = None, None
+            try: # Parse scores safely
+                if cvss_v3_data.get('score') is not None:
+                    base_score_v3 = float(cvss_v3_data['score'])
+                if cvss_v3_data.get('temporal_score') is not None:
+                    temporal_score_v3 = float(cvss_v3_data['temporal_score'])
+            except (ValueError, TypeError):
+                print(f"Warning: Could not parse CVSSv3 score for vuln {fp_id}")
+                base_score_v3, temporal_score_v3 = None, None
+            # --- End Correction ---
+            cvss_v3_dict = { "spec_version": "3.1", "version": str(cvss_v3_data.get('version', '3.1')), "vectorString": cvss_v3_data.get('vector_string'), "baseScore": base_score_v3, "attackVector": cvss_v3_data.get('attack_vector'), "attackComplexity": cvss_v3_data.get('attack_complexity'), "privilegesRequired": cvss_v3_data.get('privileges_required'), "userInteraction": cvss_v3_data.get('user_interaction'), "scope": cvss_v3_data.get('scope'), "confidentialityImpact": cvss_v3_data.get('confidentiality_impact'), "integrityImpact": cvss_v3_data.get('integrity_impact'), "availabilityImpact": cvss_v3_data.get('availability_impact'), "exploitCodeMaturity": cvss_v3_data.get('exploit_code_maturity'), "remediationLevel": cvss_v3_data.get('remediation_level'), "reportConfidence": cvss_v3_data.get('report_confidence'), "temporalScore": temporal_score_v3, "baseSeverity": severity if severity else None }
+            cvss_v3_dict_filtered = {k: v for k, v in cvss_v3_dict.items() if v is not None}
+            if cvss_v3_dict_filtered: extensions[CVSSV3_EXTENSION_ID] = cvss_v3_dict_filtered
+
+    cvss_v2_list = fp_vuln_data.get('cvss_v2s', [])
+    if cvss_v2_list and isinstance(cvss_v2_list, list) and cvss_v2_list:
+        cvss_v2_data = cvss_v2_list[0]
+        if isinstance(cvss_v2_data, dict):
+            # --- CORRECTED Syntax for score parsing ---
+            base_score_v2 = None
+            try:
+                if cvss_v2_data.get('score') is not None:
+                    base_score_v2 = float(cvss_v2_data['score'])
+            except (ValueError, TypeError):
+                print(f"Warning: Could not parse CVSSv2 score for vuln {fp_id}")
+                base_score_v2 = None
+            # --- End Correction ---
+            cvss_v2_dict = { "spec_version": "2.0", "version": "2.0", "baseScore": base_score_v2, "accessVector": cvss_v2_data.get('access_vector'), "accessComplexity": cvss_v2_data.get('access_complexity'), "authentication": cvss_v2_data.get('authentication'), "confidentialityImpact": cvss_v2_data.get('confidentiality_impact'), "integrityImpact": cvss_v2_data.get('integrity_impact'), "availabilityImpact": cvss_v2_data.get('availability_impact'), }
+            cvss_v2_dict_filtered = {k: v for k, v in cvss_v2_dict.items() if v is not None}
+            if cvss_v2_dict_filtered: extensions[CVSSV2_EXTENSION_ID] = cvss_v2_dict_filtered
+
+    # --- Custom Properties ---
+    custom_props = {}
+    cvss_v4_list = fp_vuln_data.get('cvss_v4s', [])
+    if cvss_v4_list and isinstance(cvss_v4_list, list) and cvss_v4_list:
+        cvss_v4_data = cvss_v4_list[0]
+        if isinstance(cvss_v4_data, dict):
+            # --- CORRECTED Syntax for score parsing ---
+            base_score_v4, threat_score_v4 = None, None
+            try:
+                if cvss_v4_data.get('score') is not None: base_score_v4 = float(cvss_v4_data['score'])
+                if cvss_v4_data.get('threat_score') is not None: threat_score_v4 = float(cvss_v4_data['threat_score'])
+            except (ValueError, TypeError):
+                print(f"Warning: Could not parse CVSSv4 score for vuln {fp_id}")
+                base_score_v4, threat_score_v4 = None, None
+            # --- End Correction ---
+            cvss_v4_prop_dict = {k: v for k, v in cvss_v4_data.items() if v is not None}
+            if base_score_v4 is not None: cvss_v4_prop_dict['baseScore'] = base_score_v4
+            elif 'score' in cvss_v4_prop_dict: del cvss_v4_prop_dict['score']
+            if threat_score_v4 is not None: cvss_v4_prop_dict['threatScore'] = threat_score_v4
+            elif 'threat_score' in cvss_v4_prop_dict: del cvss_v4_prop_dict['threat_score']
+            if cvss_v4_prop_dict: custom_props['x_flashpoint_cvssv4'] = cvss_v4_prop_dict
+    epss_score = scores_dict.get('epss_score')
+    if epss_score is not None:
+        try: custom_props['x_flashpoint_epss_score'] = float(epss_score)
+        except (ValueError, TypeError): print(f"Warning: Could not parse EPSS score '{epss_score}' for vuln {fp_id}")
+
+    # --- Create Vulnerability Object ---
+    try:
+        vulnerability = Vulnerability(
+            name=fp_title or f"Flashpoint Vulnerability {fp_id}",
+            description=full_description,
+            created=created_at,
+            modified=modified_at,
+            external_references=external_references,
+            labels=sorted(list(set(labels))),
+            extensions=extensions if extensions else None,
+            object_marking_refs=[TLP_WHITE_DEFINITION.id], # Use ID
+            allow_custom=True,
+            **custom_props
+        )
+        stix_objects.append(vulnerability)
+    except Exception as e:
+        print(f"ERROR: Failed to create Vulnerability SDO for ID {fp_id}: {e}")
+        return [] # Skip this vulnerability if core object fails
+
+    # --- Process Affected Products (Vendor/Product Only - Updated Logic) ---
+    products_list = fp_vuln_data.get('products', [])
+    vendors_list = fp_vuln_data.get('vendors', []) # Get top-level vendors list
+
+    # Create a lookup map for vendor IDs to names for efficiency
+    vendor_map = {}
+    if isinstance(vendors_list, list):
+        vendor_map = {v.get('id'): v.get('name') for v in vendors_list if isinstance(v, dict) and v.get('id') and v.get('name')}
+
+    if isinstance(products_list, list):
+        for i, product_info in enumerate(products_list):
+            if not isinstance(product_info, dict): continue
+            product_name = product_info.get('name')
+            if not product_name: continue # Skip if no product name
+
+            vendor_name = None
+            # Attempt 1: Get vendor name directly from product object
+            vendor_name = product_info.get('vendor')
+            # Attempt 2: If not found, try lookup using vendor_id from product object
+            if not vendor_name:
+                vendor_id = product_info.get('vendor_id')
+                if vendor_id and vendor_id in vendor_map:
+                    vendor_name = vendor_map.get(vendor_id)
+            # Attempt 3: If still not found, assume positional correspondence if only 1 product/vendor
+            if not vendor_name and len(products_list) == 1 and len(vendors_list) == 1:
+                 if isinstance(vendors_list[0], dict):
+                      vendor_name = vendors_list[0].get('name')
+                      print(f"Info: Assuming single vendor '{vendor_name}' matches single product '{product_name}' for vuln {fp_id}")
+
+            # If we still couldn't determine a vendor name, skip
+            if not vendor_name:
+                 print(f"Warning: Could not determine vendor for product '{product_name}' (vuln {fp_id}). Skipping software/relationship creation.")
+                 continue
+
+            # Create Software object (NO VERSION)
+            cache_key = f"{vendor_name}::{product_name}" # Cache key
+
+            try: # Wrap software/relationship creation
+                if cache_key not in software_cache:
+                    software = Software( name=product_name, vendor=vendor_name,
+                        object_marking_refs=[TLP_WHITE_DEFINITION.id], allow_custom=True )
+                    stix_objects.append(software)
+                    software_cache[cache_key] = software
+                    print(f"Info: Created Software object for {product_name} by {vendor_name}")
+                else:
+                    software = software_cache[cache_key]
+                    print(f"Info: Reused cached Software object for {product_name} by {vendor_name}")
+
+                # Create Relationship: Vulnerability -> has -> Software
+                vuln_id_desc = next((ref.external_id for ref in external_references if ref.source_name == 'cve'), f"FP-{fp_id}")
+                rel_desc = f"Vulnerability {vuln_id_desc} affects {product_name} (by {vendor_name})"
+                rel = Relationship( vulnerability, 'has', software, description=rel_desc,
+                                    object_marking_refs=[TLP_WHITE_DEFINITION.id] )
+                stix_objects.append(rel)
+            except Exception as e_sw_rel:
+                print(f"ERROR: Failed creating base Software/Relationship for product '{product_name}' (vuln {fp_id}): {e_sw_rel}")
+
+    return stix_objects
+</file>
+
+<file path=".eslintrc.json">
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript"
+  ]
+}
+</file>
+
+<file path=".gitignore">
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+</file>
+
+<file path="components.json">
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "iconLibrary": "lucide"
+}
+</file>
+
+<file path="json2csv.d.ts">
+// json2csv.d.ts
+
+declare module "json2csv" {
+    export interface ParserOptions<T = any> {
+      fields?: (keyof T | string)[];
+      delimiter?: string;
+      quote?: string;
+      withBOM?: boolean;
+      header?: boolean;
+      unwind?: string | string[];
+      flatten?: boolean;
+      flattenSeparator?: string;
+      eol?: string;
+    }
+  
+    export class Parser<T = any> {
+      constructor(opts?: ParserOptions<T>);
+      parse(data: T[]): string;
+    }
+  }
+</file>
+
+<file path="next.config.js">
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+};
+
+module.exports = nextConfig;
+</file>
+
+<file path="package.json">
+{
+  "name": "threat-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.5",
+    "@radix-ui/react-popover": "^1.1.5",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@radix-ui/react-tabs": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
+    "formidable": "^3.5.2",
+    "json2csv": "^6.0.0-alpha.2",
+    "lucide-react": "^0.474.0",
+    "next": "^14.2.23",
+    "papaparse": "^5.5.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.15.1",
+    "swr": "^2.3.0",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/papaparse": "^5.3.15",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.23",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
+</file>
+
+<file path="postcss.config.mjs">
+/** @type {import('postcss-load-config').Config} */
+const config = {
+  plugins: {
+    tailwindcss: {},
+  },
+};
+
+export default config;
+</file>
+
+<file path="README.md">
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</file>
+
+<file path="tailwind.config.ts">
+import type { Config } from "tailwindcss";
+
+export default {
+    darkMode: ["class"],
+    content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+  	extend: {
+  		colors: {
+  			background: 'hsl(var(--background))',
+  			foreground: 'hsl(var(--foreground))',
+  			card: {
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
+  			},
+  			popover: {
+  				DEFAULT: 'hsl(var(--popover))',
+  				foreground: 'hsl(var(--popover-foreground))'
+  			},
+  			primary: {
+  				DEFAULT: 'hsl(var(--primary))',
+  				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			secondary: {
+  				DEFAULT: 'hsl(var(--secondary))',
+  				foreground: 'hsl(var(--secondary-foreground))'
+  			},
+  			muted: {
+  				DEFAULT: 'hsl(var(--muted))',
+  				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			accent: {
+  				DEFAULT: 'hsl(var(--accent))',
+  				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			destructive: {
+  				DEFAULT: 'hsl(var(--destructive))',
+  				foreground: 'hsl(var(--destructive-foreground))'
+  			},
+  			border: 'hsl(var(--border))',
+  			input: 'hsl(var(--input))',
+  			ring: 'hsl(var(--ring))',
+  			chart: {
+  				'1': 'hsl(var(--chart-1))',
+  				'2': 'hsl(var(--chart-2))',
+  				'3': 'hsl(var(--chart-3))',
+  				'4': 'hsl(var(--chart-4))',
+  				'5': 'hsl(var(--chart-5))'
+  			}
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		}
+  	}
+  },
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "json2csv.d.ts",   // <-- Add this line
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}
+</file>
+
 <file path="vercel.json">
 {
     "version": 2,
     "builds": [
       {
-        "src": "app.py",
+        "src": "package.json",
+        "use": "@vercel/next"
+      },
+      {
+        "src": "api",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
-        "src": "/(.*)",
-        "dest": "app.py"
+        "handle": "filesystem"
+      },
+      {
+        "src": "/py-api/stix_poc",
+        "dest": "/api/stix_poc.py"
       }
     ]
   }
