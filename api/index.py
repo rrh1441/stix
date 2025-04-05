@@ -27,10 +27,9 @@ except ImportError as e:
     }
 else:
     # If import succeeded, create a dictionary version for JSON serialization
-    # Note: Accessing internal '_properties' is not ideal but works for simple cases.
-    # A better way might be needed if the stix2 object is complex.
     try:
-        TLP_WHITE_DEFINITION_DICT = TLP_WHITE_DEFINITION.serialize()
+        # THIS LINE IS FIXED: Parse the JSON string back to a dictionary
+        TLP_WHITE_DEFINITION_DICT = json.loads(TLP_WHITE_DEFINITION.serialize())
     except Exception as serialize_err:
          print(f"Warning: Could not serialize TLP_WHITE_DEFINITION object: {serialize_err}")
          # Fallback to manual dict
@@ -193,7 +192,8 @@ async def generate_stix_bundle_endpoint():
                  # Serialize each stix2 object to a dictionary
                  for stix2_obj in stix2_objects:
                      try:
-                         all_stix_object_data.append(stix2_obj.serialize())
+                         # THIS LINE IS FIXED: Parse the JSON string back to a dictionary
+                         all_stix_object_data.append(json.loads(stix2_obj.serialize()))
                      except Exception as serialize_err:
                          print(f"Error serializing STIX object {getattr(stix2_obj, 'id', 'N/A')}: {serialize_err}")
                          conversion_errors += 1 # Count serialization errors
