@@ -3,4 +3,3 @@ python-multipart>=0.0.5
 uvicorn>=0.22.0
 requests>=2.25
 stix2==3.0.1
-fastapi-cors>=1.0.0 
